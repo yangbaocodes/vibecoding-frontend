@@ -98,7 +98,15 @@ const stats = ref([
 ])
 
 // 最近活动
-const recentActivities = ref([
+const recentActivities = ref<
+  Array<{
+    id: string
+    title: string
+    description: string
+    time: string
+    type: 'user' | 'order' | 'system' | 'default'
+  }>
+>([
   {
     id: '1',
     title: 'New user registered',

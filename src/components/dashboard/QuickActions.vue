@@ -6,7 +6,7 @@
       </ElIcon>
       <p class="empty__text">{{ $t('No quick actions available') }}</p>
     </div>
-    
+
     <div v-else class="quick-actions__grid">
       <div
         v-for="action in actions"
@@ -19,12 +19,12 @@
             <component :is="action.icon" />
           </ElIcon>
         </div>
-        
+
         <div class="action-item__content">
           <div class="action-item__title">{{ action.title }}</div>
           <div class="action-item__description">{{ action.description }}</div>
         </div>
-        
+
         <div class="action-item__arrow">
           <ElIcon color="var(--text-color-placeholder)">
             <ArrowRight />
@@ -51,7 +51,7 @@ interface Props {
   actions: QuickAction[]
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 // 获取图标背景色
 const getIconBgColor = (color: string) => {

@@ -1,11 +1,7 @@
 <template>
   <ElDropdown trigger="click" @command="handleCommand">
     <div class="user-menu">
-      <ElAvatar
-        :size="32"
-        :src="currentUser?.avatar"
-        class="user-avatar"
-      >
+      <ElAvatar :size="32" :src="currentUser?.avatar" class="user-avatar">
         <ElIcon><User /></ElIcon>
       </ElAvatar>
       <span v-if="!isMobile" class="username">{{ currentUser?.username || 'User' }}</span>
@@ -55,17 +51,17 @@ const handleCommand = async (command: string) => {
       // router.push('/profile')
       ElMessage.info('Profile page is coming soon!')
       break
-    
+
     case 'settings':
       // 跳转到设置页面
       // router.push('/settings')
       ElMessage.info('Settings page is coming soon!')
       break
-    
+
     case 'logout':
       await handleLogout()
       break
-    
+
     default:
       console.warn('Unknown command:', command)
   }
@@ -74,19 +70,15 @@ const handleCommand = async (command: string) => {
 // 处理用户登出
 const handleLogout = async () => {
   try {
-    await ElMessageBox.confirm(
-      t('Are you sure you want to logout?'),
-      t('Confirm Logout'),
-      {
-        confirmButtonText: t('common.confirm'),
-        cancelButtonText: t('common.cancel'),
-        type: 'warning'
-      }
-    )
+    await ElMessageBox.confirm(t('Are you sure you want to logout?'), t('Confirm Logout'), {
+      confirmButtonText: t('common.confirm'),
+      cancelButtonText: t('common.cancel'),
+      type: 'warning'
+    })
 
     await logout()
     ElMessage.success(t('auth.logoutSuccess'))
-    
+
     // 跳转到登录页
     router.push({ name: ROUTE_NAMES.LOGIN })
   } catch (error) {
@@ -128,7 +120,7 @@ const handleLogout = async () => {
   font-size: 12px;
   color: var(--text-color-secondary);
   @include transition(transform);
-  
+
   .user-menu:hover & {
     transform: rotate(180deg);
   }

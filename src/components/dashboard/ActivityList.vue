@@ -6,30 +6,26 @@
       </ElIcon>
       <p class="empty__text">{{ $t('No recent activities') }}</p>
     </div>
-    
+
     <div v-else class="activity-list__items">
-      <div
-        v-for="activity in activities"
-        :key="activity.id"
-        class="activity-item"
-      >
+      <div v-for="activity in activities" :key="activity.id" class="activity-item">
         <div class="activity-item__icon" :class="`activity-item__icon--${activity.type}`">
           <ElIcon>
             <component :is="getActivityIcon(activity.type)" />
           </ElIcon>
         </div>
-        
+
         <div class="activity-item__content">
           <div class="activity-item__title">{{ activity.title }}</div>
           <div class="activity-item__description">{{ activity.description }}</div>
         </div>
-        
+
         <div class="activity-item__time">
           {{ activity.time }}
         </div>
       </div>
     </div>
-    
+
     <div v-if="activities.length > 0" class="activity-list__footer">
       <ElButton link @click="handleViewAll">
         {{ $t('View all activities') }}

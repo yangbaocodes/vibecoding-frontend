@@ -9,13 +9,17 @@
           </ElIcon>
         </div>
       </div>
-      
+
       <div class="not-found__content">
         <h1 class="error-title">{{ $t('error.404') }}</h1>
         <p class="error-description">
-          {{ $t('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.') }}
+          {{
+            $t(
+              'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.'
+            )
+          }}
         </p>
-        
+
         <div class="error-actions">
           <ElButton type="primary" @click="goHome">
             <ElIcon><House /></ElIcon>
@@ -38,7 +42,7 @@ import { useI18n } from 'vue-i18n'
 import { ROUTE_NAMES } from '@/constants'
 
 const router = useRouter()
-const { t } = useI18n()
+useI18n()
 
 // 回到首页
 const goHome = () => {
@@ -56,7 +60,11 @@ const goBack = () => {
   min-height: 100vh;
   @include flex(column, center, center);
   padding: $spacing-xl;
-  background: linear-gradient(135deg, rgba($primary-color, 0.05) 0%, rgba($primary-color, 0.02) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba($primary-color, 0.05) 0%,
+    rgba($primary-color, 0.02) 100%
+  );
 
   &__container {
     text-align: center;
@@ -128,7 +136,8 @@ const goBack = () => {
 
 // 动画效果
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -137,7 +146,11 @@ const goBack = () => {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {

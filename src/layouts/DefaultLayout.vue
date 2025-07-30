@@ -3,11 +3,7 @@
     <!-- 头部 -->
     <header class="layout__header">
       <div class="header-left">
-        <ElButton
-          :icon="sidebarCollapsed ? 'Expand' : 'Fold'"
-          link
-          @click="toggleSidebar"
-        />
+        <ElButton :icon="sidebarCollapsed ? 'Expand' : 'Fold'" link @click="toggleSidebar" />
         <h1 class="header-title">{{ $t('app.title') }}</h1>
       </div>
       <div class="header-right">
@@ -18,22 +14,12 @@
     </header>
 
     <!-- 侧边栏 -->
-    <aside
-      :class="[
-        'layout__sidebar',
-        { 'layout__sidebar--collapsed': sidebarCollapsed }
-      ]"
-    >
+    <aside :class="['layout__sidebar', { 'layout__sidebar--collapsed': sidebarCollapsed }]">
       <SidebarMenu />
     </aside>
 
     <!-- 主内容区 -->
-    <main
-      :class="[
-        'layout__content',
-        { 'layout__content--sidebar-collapsed': sidebarCollapsed }
-      ]"
-    >
+    <main :class="['layout__content', { 'layout__content--sidebar-collapsed': sidebarCollapsed }]">
       <ElScrollbar>
         <RouterView />
       </ElScrollbar>
@@ -57,12 +43,7 @@ import UserMenu from '@/components/layout/UserMenu.vue'
 
 const appStore = useAppStore()
 
-const {
-  sidebarCollapsed,
-  isMobile,
-  toggleSidebar,
-  setSidebarCollapsed
-} = appStore
+const { sidebarCollapsed, isMobile, toggleSidebar, setSidebarCollapsed } = appStore
 </script>
 
 <style lang="scss" scoped>

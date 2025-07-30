@@ -3,21 +3,28 @@
  */
 
 import Request from '@/utils/request'
-import type { ApiResponse, User, PaginationData } from '@/types'
+import type { ApiResponse, User } from '@/types'
 
 // 用户相关API
 export const userApi = {
   /**
    * 用户登录
    */
-  login(data: { username: string; password: string }): Promise<ApiResponse<{ token: string; user: User }>> {
+  login(data: {
+    username: string
+    password: string
+  }): Promise<ApiResponse<{ token: string; user: User }>> {
     return Request.post('/auth/login', data)
   },
 
   /**
    * 用户注册
    */
-  register(data: { username: string; email: string; password: string }): Promise<ApiResponse<User>> {
+  register(data: {
+    username: string
+    email: string
+    password: string
+  }): Promise<ApiResponse<User>> {
     return Request.post('/auth/register', data)
   },
 

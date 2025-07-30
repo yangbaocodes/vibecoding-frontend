@@ -10,14 +10,11 @@
         @select="handleMenuSelect"
       >
         <template v-for="item in menuItems" :key="item.path">
-          <ElMenuItem
-            v-if="!item.children || item.children.length === 0"
-            :index="item.path"
-          >
+          <ElMenuItem v-if="!item.children || item.children.length === 0" :index="item.path">
             <ElIcon v-if="item.icon">
               <component :is="item.icon" />
             </ElIcon>
-            <template #title>{{ $t(item.title) }}</template>
+            <template #title>{{ $t(item.meta?.title || item.name) }}</template>
           </ElMenuItem>
 
           <ElSubMenu v-else :index="item.path">
@@ -25,17 +22,13 @@
               <ElIcon v-if="item.icon">
                 <component :is="item.icon" />
               </ElIcon>
-              <span>{{ $t(item.title) }}</span>
+              <span>{{ $t(item.meta?.title || item.name) }}</span>
             </template>
-            <ElMenuItem
-              v-for="child in item.children"
-              :key="child.path"
-              :index="child.path"
-            >
+            <ElMenuItem v-for="child in item.children" :key="child.path" :index="child.path">
               <ElIcon v-if="child.icon">
                 <component :is="child.icon" />
               </ElIcon>
-              <template #title>{{ $t(child.title) }}</template>
+              <template #title>{{ $t(child.meta?.title || child.name) }}</template>
             </ElMenuItem>
           </ElSubMenu>
         </template>
@@ -62,9 +55,11 @@ const menuItems: MenuItem[] = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: 'House',
-    title: 'navigation.dashboard',
-    meta: { requiresAuth: true }
-  },
+    meta: {
+      title: 'navigation.dashboard',
+      requiresAuth: true
+    }
+  }
   // 这里可以添加更多菜单项
 ]
 

@@ -6,6 +6,7 @@
 
 // 清除浮动
 @mixin clearfix {
+
   &::after {
     content: '';
     display: table;
@@ -31,6 +32,7 @@
 // 居中对齐
 @mixin center($direction: 'both') {
   position: absolute;
+
   @if $direction == 'both' {
     top: 50%;
     left: 50%;
@@ -125,6 +127,7 @@
 
 // 滚动条样式
 @mixin scrollbar($size: 6px, $track-color: transparent, $thumb-color: rgba(0, 0, 0, 0.3)) {
+
   &::-webkit-scrollbar {
     width: $size;
     height: $size;
@@ -139,7 +142,7 @@
     border-radius: calc($size / 2);
 
     &:hover {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgb(0 0 0 / 40%);
     }
   }
 }

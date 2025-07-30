@@ -24,4 +24,9 @@ Always respond in 中文
 
 如果用户提供了figma的链接，自动使用figma-developer-mcp MCP读取figma设计信息
 
-每次改动代码后都检测一下lint扫描是否有问题
+如果你反复修改同一个问题超过3次修复不了就尝试打印更多的日志信息帮助定位和分析问题
+
+每次改动代码后都执行一下检测：
+npm run lint
+npm run lint:style
+npm run type-check

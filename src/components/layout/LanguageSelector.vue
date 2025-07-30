@@ -57,7 +57,7 @@ const currentLanguageLabel = computed(() => {
 const handleLanguageChange = (langValue: string) => {
   setLanguage(langValue)
   locale.value = langValue
-  
+
   // 可以在这里添加其他语言切换后的逻辑
   // 比如重新加载某些数据、更新页面标题等
 }
@@ -78,7 +78,7 @@ const handleLanguageChange = (langValue: string) => {
 
   .language-text {
     font-size: $font-size-small;
-    
+
     @include respond-to(xs) {
       display: none;
     }

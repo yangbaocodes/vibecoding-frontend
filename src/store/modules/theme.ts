@@ -11,7 +11,9 @@ export type ThemeType = 'light' | 'dark' | 'auto'
 
 export const useThemeStore = defineStore('theme', () => {
   // 状态
-  const theme = ref<ThemeType>(localStorage.getItem<ThemeType>(STORAGE_KEYS.THEME) || DEFAULT_CONFIG.THEME as ThemeType)
+  const theme = ref<ThemeType>(
+    localStorage.getItem<ThemeType>(STORAGE_KEYS.THEME) || (DEFAULT_CONFIG.THEME as ThemeType)
+  )
   const primaryColor = ref('#409eff')
 
   // Getters
@@ -37,7 +39,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   const applyTheme = () => {
     const htmlElement = document.documentElement
-    
+
     if (isDark.value) {
       htmlElement.classList.add('dark')
       htmlElement.classList.remove('light')
@@ -54,7 +56,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   const initTheme = () => {
     applyTheme()
-    
+
     // 监听系统主题变化
     if (theme.value === 'auto') {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')

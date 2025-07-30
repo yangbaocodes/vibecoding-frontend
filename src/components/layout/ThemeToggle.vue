@@ -3,11 +3,7 @@
     :content="$t(isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode')"
     placement="bottom"
   >
-    <ElButton
-      link
-      class="theme-toggle"
-      @click="toggleTheme"
-    >
+    <ElButton link class="theme-toggle" @click="toggleTheme">
       <ElIcon :class="{ 'rotate-animation': isToggling }">
         <Sunny v-if="!isDark" />
         <Moon v-else />
@@ -29,14 +25,14 @@ const isToggling = ref(false)
 // 切换主题
 const toggleTheme = async () => {
   if (isToggling.value) return
-  
+
   isToggling.value = true
-  
+
   // 添加过渡动画效果
   document.documentElement.style.transition = 'background-color 0.3s ease, color 0.3s ease'
-  
+
   storeToggleTheme()
-  
+
   // 动画结束后移除过渡效果
   setTimeout(() => {
     document.documentElement.style.transition = ''

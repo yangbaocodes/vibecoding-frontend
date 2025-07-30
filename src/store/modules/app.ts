@@ -10,7 +10,9 @@ import { localStorage } from '@/utils/storage'
 export const useAppStore = defineStore('app', () => {
   // 状态
   const loading = ref(false)
-  const language = ref(localStorage.getItem<string>(STORAGE_KEYS.LANGUAGE) || DEFAULT_CONFIG.LANGUAGE)
+  const language = ref(
+    localStorage.getItem<string>(STORAGE_KEYS.LANGUAGE) || DEFAULT_CONFIG.LANGUAGE
+  )
   const sidebarCollapsed = ref(false)
   const deviceType = ref<'desktop' | 'tablet' | 'mobile'>('desktop')
 

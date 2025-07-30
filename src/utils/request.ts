@@ -2,7 +2,12 @@
  * HTTP Request Utilities
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig
+} from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { API_CONSTANTS, STORAGE_KEYS, HTTP_STATUS } from '@/constants'
 import { localStorage } from '@/utils/storage'
@@ -19,7 +24,7 @@ const service: AxiosInstance = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     // 添加认证token
     const token = localStorage.getItem<string>(STORAGE_KEYS.TOKEN)
     if (token && config.headers) {
@@ -41,7 +46,7 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse>) => {
+  (response: AxiosResponse<ApiResponse>): any => {
     const { data } = response
 
     // 如果是文件下载，直接返回
@@ -51,7 +56,7 @@ service.interceptors.response.use(
 
     // 检查业务状态码
     if (data.code === HTTP_STATUS.OK) {
-      return data
+      return data.data
     } else {
       // 处理业务错误
       ElMessage.error(data.message || 'Request failed')
@@ -66,11 +71,15 @@ service.interceptors.response.use(
 
       switch (status) {
         case HTTP_STATUS.UNAUTHORIZED:
-          ElMessageBox.confirm('Your session has expired. Please log in again.', 'Session Expired', {
-            confirmButtonText: 'Re-login',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }).then(() => {
+          ElMessageBox.confirm(
+            'Your session has expired. Please log in again.',
+            'Session Expired',
+            {
+              confirmButtonText: 'Re-login',
+              cancelButtonText: 'Cancel',
+              type: 'warning'
+            }
+          ).then(() => {
             localStorage.removeItem(STORAGE_KEYS.TOKEN)
             localStorage.removeItem(STORAGE_KEYS.USER_INFO)
             window.location.reload()
@@ -99,12 +108,17 @@ service.interceptors.response.use(
 )
 
 // 请求重试机制
-const retryRequest = async (config: AxiosRequestConfig, retryCount = API_CONSTANTS.RETRY_COUNT) => {
+const retryRequest = async (
+  config: AxiosRequestConfig,
+  retryCount: number = API_CONSTANTS.RETRY_COUNT
+) => {
   try {
     return await service(config)
   } catch (error) {
     if (retryCount > 1) {
-      console.warn(`Request failed, retrying... (${API_CONSTANTS.RETRY_COUNT - retryCount + 1}/${API_CONSTANTS.RETRY_COUNT})`)
+      console.warn(
+        `Request failed, retrying... (${API_CONSTANTS.RETRY_COUNT - retryCount + 1}/${API_CONSTANTS.RETRY_COUNT})`
+      )
       await new Promise(resolve => setTimeout(resolve, 1000))
       return retryRequest(config, retryCount - 1)
     }
@@ -117,21 +131,33 @@ class Request {
   /**
    * GET请求
    */
-  static get<T = any>(url: string, params?: Record<string, any>, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  static get<T = any>(
+    url: string,
+    params?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     return service.get(url, { params, ...config })
   }
 
   /**
    * POST请求
    */
-  static post<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  static post<T = any>(
+    url: string,
+    data?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     return service.post(url, data, config)
   }
 
   /**
    * PUT请求
    */
-  static put<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  static put<T = any>(
+    url: string,
+    data?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     return service.put(url, data, config)
   }
 
@@ -145,14 +171,22 @@ class Request {
   /**
    * PATCH请求
    */
-  static patch<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  static patch<T = any>(
+    url: string,
+    data?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     return service.patch(url, data, config)
   }
 
   /**
    * 文件上传
    */
-  static upload<T = any>(url: string, file: File | FormData, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  static upload<T = any>(
+    url: string,
+    file: File | FormData,
+    config?: AxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     const formData = file instanceof FormData ? file : new FormData()
     if (file instanceof File) {
       formData.append('file', file)
@@ -170,20 +204,22 @@ class Request {
    * 文件下载
    */
   static download(url: string, params?: Record<string, any>, filename?: string): Promise<void> {
-    return service.get(url, {
-      params,
-      responseType: 'blob'
-    }).then((response: AxiosResponse) => {
-      const blob = new Blob([response.data])
-      const downloadUrl = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = downloadUrl
-      link.download = filename || 'download'
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(downloadUrl)
-    })
+    return service
+      .get(url, {
+        params,
+        responseType: 'blob'
+      })
+      .then((response: AxiosResponse) => {
+        const blob = new Blob([response.data])
+        const downloadUrl = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = downloadUrl
+        link.download = filename || 'download'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(downloadUrl)
+      })
   }
 }
 

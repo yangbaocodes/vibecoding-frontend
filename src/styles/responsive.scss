@@ -53,9 +53,12 @@
 
 // 移动端布局适配
 @include respond-to(xs) {
+
   .layout {
+
     &__sidebar {
       transform: translateX(-100%);
+
       @include transition(transform);
 
       &--open {
@@ -69,6 +72,7 @@
   }
 
   // 移动端卡片
+
   .card {
     margin: 0 -#{$spacing-md};
     border-radius: 0;
@@ -77,6 +81,7 @@
   }
 
   // 移动端按钮
+
   .btn {
     width: 100%;
     margin-bottom: $spacing-sm;
@@ -87,6 +92,7 @@
   }
 
   // 移动端表格
+
   .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -95,7 +101,9 @@
 
 // 平板端适配
 @include respond-to(md) {
+
   .layout {
+
     &__sidebar {
       width: $sidebar-collapsed-width;
 
@@ -270,6 +278,7 @@
 }
 
 // 容器响应式
+
 .container {
   width: 100%;
   margin: 0 auto;

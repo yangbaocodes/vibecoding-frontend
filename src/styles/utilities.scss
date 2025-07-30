@@ -142,6 +142,7 @@
 .float-none { float: none !important; }
 
 // 清除浮动
+
 .clearfix {
   @include clearfix;
 }
@@ -225,6 +226,7 @@
 .invisible { visibility: hidden !important; }
 
 // 省略号
+
 .text-ellipsis {
   @include ellipsis(1);
 }
@@ -238,6 +240,7 @@
 }
 
 // 居中
+
 .center-both {
   @include center(both);
 }

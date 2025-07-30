@@ -61,7 +61,7 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to: any, _from: any, savedPosition: any) {
     if (savedPosition) {
       return savedPosition
     } else {
@@ -71,7 +71,7 @@ const router = createRouter({
 })
 
 // 全局前置守卫
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to: any, _from: any, next: any) => {
   const userStore = useUserStore()
   const appStore = useAppStore()
 

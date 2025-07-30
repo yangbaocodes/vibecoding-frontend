@@ -5,12 +5,7 @@
       <p class="form-subtitle">{{ $t('app.welcome') }}</p>
     </div>
 
-    <ElForm
-      ref="formRef"
-      :model="formData"
-      :rules="formRules"
-      @keyup.enter="handleLogin"
-    >
+    <ElForm ref="formRef" :model="formData" :rules="formRules" @keyup.enter="handleLogin">
       <ElFormItem prop="username">
         <ElInput
           v-model="formData.username"
@@ -71,15 +66,13 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store/modules/user'
-import { ROUTE_NAMES } from '@/constants'
 
 const router = useRouter()
-const route = useRoute()
 const { t } = useI18n()
 const userStore = useUserStore()
 
@@ -120,14 +113,11 @@ const handleLogin = async () => {
 
     ElMessage.success(t('auth.loginSuccess'))
 
-    // 获取重定向路径
-    const redirect = route.query.redirect as string || '/'
-    
-    // 跳转到目标页面
-    router.push(redirect)
+    // 直接跳转到dashboard
+    router.replace('/dashboard')
   } catch (error: any) {
     console.error('Login failed:', error)
-    
+
     if (error.response?.status === 401) {
       ElMessage.error(t('auth.invalidCredentials'))
     } else {

@@ -6,21 +6,26 @@
 @use './mixins.scss' as *;
 
 // 布局组件
+
 .layout {
   min-height: 100vh;
+
   @include flex(column);
 
   &__header {
     height: $header-height;
     background: var(--bg-color, $bg-color);
     border-bottom: 1px solid var(--border-color-light, $border-color-light);
+
     @include flex(row, space-between, center);
+
     padding: 0 $spacing-lg;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: $z-index-fixed;
+
     @include transition(all);
   }
 
@@ -34,7 +39,8 @@
     bottom: 0;
     z-index: $z-index-sticky;
     overflow-y: auto;
-    @include scrollbar();
+
+    @include scrollbar;
     @include transition(width);
 
     &--collapsed {
@@ -47,6 +53,7 @@
     margin-top: $header-height;
     margin-left: $sidebar-width;
     padding: $spacing-lg;
+
     @include transition(margin-left);
 
     &--sidebar-collapsed {
@@ -60,14 +67,17 @@
 }
 
 // 卡片组件
+
 .card {
-  @include card();
+  @include card;
+
   margin-bottom: $spacing-lg;
 
   &__header {
     padding-bottom: $spacing-md;
     border-bottom: 1px solid var(--border-color-lighter, $border-color-lighter);
     margin-bottom: $spacing-md;
+
     @include flex(row, space-between, center);
 
     &-title {
@@ -98,6 +108,7 @@
 
   &--hoverable {
     cursor: pointer;
+
     @include transition(box-shadow);
 
     &:hover {
@@ -107,6 +118,7 @@
 }
 
 // 按钮组件
+
 .btn {
   display: inline-block;
   padding: $spacing-sm $spacing-md;
@@ -118,6 +130,7 @@
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: $border-radius-md;
+
   @include transition(all);
 
   &:hover,
@@ -131,6 +144,7 @@
   }
 
   // 按钮尺寸
+
   &--small {
     padding: $spacing-xs $spacing-sm;
     font-size: $font-size-small;
@@ -142,6 +156,7 @@
   }
 
   // 按钮类型
+
   &--primary {
     @include button-variant(#fff, $primary-color, $primary-color);
   }
@@ -168,8 +183,10 @@
 }
 
 // 加载组件
+
 .loading {
   @include flex(column, center, center);
+
   padding: $spacing-xl;
   color: var(--text-color-secondary, $text-color-secondary);
 
@@ -194,8 +211,10 @@
 }
 
 // 空状态组件
+
 .empty {
   @include flex(column, center, center);
+
   padding: $spacing-xxl;
   color: var(--text-color-secondary, $text-color-secondary);
 
@@ -217,6 +236,7 @@
 }
 
 // 标签组件
+
 .tag {
   display: inline-block;
   padding: $spacing-xs $spacing-sm;
@@ -253,10 +273,12 @@
 }
 
 // 页面头部
+
 .page-header {
   margin-bottom: $spacing-lg;
   padding-bottom: $spacing-md;
   border-bottom: 1px solid var(--border-color-lighter, $border-color-lighter);
+
   @include flex(row, space-between, center);
 
   &__title {
@@ -273,6 +295,7 @@
 
   &__actions {
     @include flex(row, flex-end, center);
+
     gap: $spacing-sm;
   }
 }

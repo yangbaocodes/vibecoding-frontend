@@ -39,7 +39,11 @@ import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 <style lang="scss" scoped>
 .auth-layout {
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba($primary-color, 0.1) 0%, rgba($primary-color, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba($primary-color, 0.1) 0%,
+    rgba($primary-color, 0.05) 100%
+  );
   @include flex(row, center, center);
   padding: $spacing-lg;
 
@@ -56,7 +60,11 @@ import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 
   &__left {
     flex: 1;
-    background: linear-gradient(135deg, $primary-color 0%, color-mix(in srgb, $primary-color 90%, white) 100%);
+    background: linear-gradient(
+      135deg,
+      $primary-color 0%,
+      color-mix(in srgb, $primary-color 90%, white) 100%
+    );
     color: white;
     @include flex(column, center, center);
     padding: $spacing-xxl;
@@ -113,7 +121,8 @@ import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {

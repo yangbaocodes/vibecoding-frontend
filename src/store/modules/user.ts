@@ -41,7 +41,9 @@ export const useUserStore = defineStore('user', () => {
   const login = async (credentials: { username: string; password: string }) => {
     try {
       const response = await userApi.login(credentials)
-      const { token: newToken, user } = response.data
+
+      // 从API响应中提取业务数据
+      const { token: newToken, user } = response as unknown as { token: string; user: User }
 
       setToken(newToken)
       setUserInfo(user)
