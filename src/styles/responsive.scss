@@ -1,0 +1,299 @@
+/**
+ * 响应式样式
+ */
+
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+// 响应式显示工具类
+@include respond-to(xs) {
+  .d-xs-none { display: none !important; }
+  .d-xs-inline { display: inline !important; }
+  .d-xs-inline-block { display: inline-block !important; }
+  .d-xs-block { display: block !important; }
+  .d-xs-flex { display: flex !important; }
+  .d-xs-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(sm) {
+  .d-sm-none { display: none !important; }
+  .d-sm-inline { display: inline !important; }
+  .d-sm-inline-block { display: inline-block !important; }
+  .d-sm-block { display: block !important; }
+  .d-sm-flex { display: flex !important; }
+  .d-sm-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(md) {
+  .d-md-none { display: none !important; }
+  .d-md-inline { display: inline !important; }
+  .d-md-inline-block { display: inline-block !important; }
+  .d-md-block { display: block !important; }
+  .d-md-flex { display: flex !important; }
+  .d-md-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(lg) {
+  .d-lg-none { display: none !important; }
+  .d-lg-inline { display: inline !important; }
+  .d-lg-inline-block { display: inline-block !important; }
+  .d-lg-block { display: block !important; }
+  .d-lg-flex { display: flex !important; }
+  .d-lg-inline-flex { display: inline-flex !important; }
+}
+
+@include respond-to(xl) {
+  .d-xl-none { display: none !important; }
+  .d-xl-inline { display: inline !important; }
+  .d-xl-inline-block { display: inline-block !important; }
+  .d-xl-block { display: block !important; }
+  .d-xl-flex { display: flex !important; }
+  .d-xl-inline-flex { display: inline-flex !important; }
+}
+
+// 移动端布局适配
+@include respond-to(xs) {
+  .layout {
+    &__sidebar {
+      transform: translateX(-100%);
+      @include transition(transform);
+
+      &--open {
+        transform: translateX(0);
+      }
+    }
+
+    &__content {
+      margin-left: 0;
+    }
+  }
+
+  // 移动端卡片
+  .card {
+    margin: 0 -#{$spacing-md};
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  // 移动端按钮
+  .btn {
+    width: 100%;
+    margin-bottom: $spacing-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // 移动端表格
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// 平板端适配
+@include respond-to(md) {
+  .layout {
+    &__sidebar {
+      width: $sidebar-collapsed-width;
+
+      &--expanded {
+        width: $sidebar-width;
+      }
+    }
+
+    &__content {
+      margin-left: $sidebar-collapsed-width;
+
+      &--sidebar-expanded {
+        margin-left: $sidebar-width;
+      }
+    }
+  }
+}
+
+// 响应式文本对齐
+@include respond-to(xs) {
+  .text-xs-left { text-align: left !important; }
+  .text-xs-center { text-align: center !important; }
+  .text-xs-right { text-align: right !important; }
+}
+
+@include respond-to(sm) {
+  .text-sm-left { text-align: left !important; }
+  .text-sm-center { text-align: center !important; }
+  .text-sm-right { text-align: right !important; }
+}
+
+@include respond-to(md) {
+  .text-md-left { text-align: left !important; }
+  .text-md-center { text-align: center !important; }
+  .text-md-right { text-align: right !important; }
+}
+
+@include respond-to(lg) {
+  .text-lg-left { text-align: left !important; }
+  .text-lg-center { text-align: center !important; }
+  .text-lg-right { text-align: right !important; }
+}
+
+// 响应式间距
+@each $size, $length in (
+  0: 0,
+  xs: $spacing-xs,
+  sm: $spacing-sm,
+  md: $spacing-md,
+  lg: $spacing-lg,
+  xl: $spacing-xl
+) {
+  @include respond-to(xs) {
+    .m-xs-#{$size} { margin: $length !important; }
+    .mt-xs-#{$size} { margin-top: $length !important; }
+    .mr-xs-#{$size} { margin-right: $length !important; }
+    .mb-xs-#{$size} { margin-bottom: $length !important; }
+    .ml-xs-#{$size} { margin-left: $length !important; }
+    .mx-xs-#{$size} {
+      margin-right: $length !important;
+      margin-left: $length !important;
+    }
+    .my-xs-#{$size} {
+      margin-top: $length !important;
+      margin-bottom: $length !important;
+    }
+
+    .p-xs-#{$size} { padding: $length !important; }
+    .pt-xs-#{$size} { padding-top: $length !important; }
+    .pr-xs-#{$size} { padding-right: $length !important; }
+    .pb-xs-#{$size} { padding-bottom: $length !important; }
+    .pl-xs-#{$size} { padding-left: $length !important; }
+    .px-xs-#{$size} {
+      padding-right: $length !important;
+      padding-left: $length !important;
+    }
+    .py-xs-#{$size} {
+      padding-top: $length !important;
+      padding-bottom: $length !important;
+    }
+  }
+
+  @include respond-to(sm) {
+    .m-sm-#{$size} { margin: $length !important; }
+    .mt-sm-#{$size} { margin-top: $length !important; }
+    .mr-sm-#{$size} { margin-right: $length !important; }
+    .mb-sm-#{$size} { margin-bottom: $length !important; }
+    .ml-sm-#{$size} { margin-left: $length !important; }
+    .mx-sm-#{$size} {
+      margin-right: $length !important;
+      margin-left: $length !important;
+    }
+    .my-sm-#{$size} {
+      margin-top: $length !important;
+      margin-bottom: $length !important;
+    }
+
+    .p-sm-#{$size} { padding: $length !important; }
+    .pt-sm-#{$size} { padding-top: $length !important; }
+    .pr-sm-#{$size} { padding-right: $length !important; }
+    .pb-sm-#{$size} { padding-bottom: $length !important; }
+    .pl-sm-#{$size} { padding-left: $length !important; }
+    .px-sm-#{$size} {
+      padding-right: $length !important;
+      padding-left: $length !important;
+    }
+    .py-sm-#{$size} {
+      padding-top: $length !important;
+      padding-bottom: $length !important;
+    }
+  }
+
+  @include respond-to(md) {
+    .m-md-#{$size} { margin: $length !important; }
+    .mt-md-#{$size} { margin-top: $length !important; }
+    .mr-md-#{$size} { margin-right: $length !important; }
+    .mb-md-#{$size} { margin-bottom: $length !important; }
+    .ml-md-#{$size} { margin-left: $length !important; }
+    .mx-md-#{$size} {
+      margin-right: $length !important;
+      margin-left: $length !important;
+    }
+    .my-md-#{$size} {
+      margin-top: $length !important;
+      margin-bottom: $length !important;
+    }
+
+    .p-md-#{$size} { padding: $length !important; }
+    .pt-md-#{$size} { padding-top: $length !important; }
+    .pr-md-#{$size} { padding-right: $length !important; }
+    .pb-md-#{$size} { padding-bottom: $length !important; }
+    .pl-md-#{$size} { padding-left: $length !important; }
+    .px-md-#{$size} {
+      padding-right: $length !important;
+      padding-left: $length !important;
+    }
+    .py-md-#{$size} {
+      padding-top: $length !important;
+      padding-bottom: $length !important;
+    }
+  }
+
+  @include respond-to(lg) {
+    .m-lg-#{$size} { margin: $length !important; }
+    .mt-lg-#{$size} { margin-top: $length !important; }
+    .mr-lg-#{$size} { margin-right: $length !important; }
+    .mb-lg-#{$size} { margin-bottom: $length !important; }
+    .ml-lg-#{$size} { margin-left: $length !important; }
+    .mx-lg-#{$size} {
+      margin-right: $length !important;
+      margin-left: $length !important;
+    }
+    .my-lg-#{$size} {
+      margin-top: $length !important;
+      margin-bottom: $length !important;
+    }
+
+    .p-lg-#{$size} { padding: $length !important; }
+    .pt-lg-#{$size} { padding-top: $length !important; }
+    .pr-lg-#{$size} { padding-right: $length !important; }
+    .pb-lg-#{$size} { padding-bottom: $length !important; }
+    .pl-lg-#{$size} { padding-left: $length !important; }
+    .px-lg-#{$size} {
+      padding-right: $length !important;
+      padding-left: $length !important;
+    }
+    .py-lg-#{$size} {
+      padding-top: $length !important;
+      padding-bottom: $length !important;
+    }
+  }
+}
+
+// 容器响应式
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to(sm) {
+    max-width: 540px;
+  }
+
+  @include respond-to(md) {
+    max-width: 720px;
+  }
+
+  @include respond-to(lg) {
+    max-width: 960px;
+  }
+
+  @include respond-to(xl) {
+    max-width: $container-max-width;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}

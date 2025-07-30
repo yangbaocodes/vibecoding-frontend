@@ -1,0 +1,222 @@
+/**
+ * 基础样式
+ */
+
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+// 重置样式
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// HTML 和 Body
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: var(--text-color-primary, $text-color-primary);
+  background-color: var(--bg-color-page, $bg-color-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include transition(color, background-color);
+}
+
+// 标题
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 $spacing-md 0;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-color-primary, $text-color-primary);
+}
+
+h1 { font-size: $font-size-extra-large * 1.5; }
+h2 { font-size: $font-size-extra-large * 1.25; }
+h3 { font-size: $font-size-extra-large; }
+h4 { font-size: $font-size-large; }
+h5 { font-size: $font-size-medium; }
+h6 { font-size: $font-size-base; }
+
+// 段落
+p {
+  margin: 0 0 $spacing-md 0;
+  color: var(--text-color-regular, $text-color-regular);
+}
+
+// 链接
+a {
+  color: $primary-color;
+  text-decoration: none;
+  @include transition(color);
+
+  &:hover,
+  &:focus {
+    color: $primary-color;
+    text-decoration: underline;
+    filter: brightness(0.85);
+  }
+
+  &:active {
+    color: $primary-color;
+    filter: brightness(0.8);
+  }
+}
+
+// 列表
+ul, ol {
+  margin: 0 0 $spacing-md 0;
+  padding-left: $spacing-lg;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+}
+
+// 图片
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// 表格
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: $spacing-sm $spacing-md;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color-light, $border-color-light);
+}
+
+th {
+  font-weight: 500;
+  color: var(--text-color-primary, $text-color-primary);
+  background-color: var(--bg-color, $bg-color);
+}
+
+// 表单元素
+input, button, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  @include transition(all);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// 代码
+code, pre {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875em;
+}
+
+code {
+  padding: 2px 6px;
+  background-color: var(--bg-color, $bg-color);
+  border: 1px solid var(--border-color-light, $border-color-light);
+  border-radius: $border-radius-sm;
+  color: $danger-color;
+}
+
+pre {
+  padding: $spacing-md;
+  background-color: var(--bg-color, $bg-color);
+  border: 1px solid var(--border-color-light, $border-color-light);
+  border-radius: $border-radius-md;
+  overflow-x: auto;
+  @include scrollbar();
+
+  code {
+    padding: 0;
+    background: none;
+    border: none;
+    color: inherit;
+  }
+}
+
+// 引用
+blockquote {
+  margin: 0 0 $spacing-md 0;
+  padding: $spacing-md;
+  border-left: 4px solid $primary-color;
+  background-color: var(--bg-color, $bg-color);
+  font-style: italic;
+  color: var(--text-color-secondary, $text-color-secondary);
+}
+
+// 水平线
+hr {
+  margin: $spacing-lg 0;
+  border: none;
+  height: 1px;
+  background-color: var(--border-color-light, $border-color-light);
+}
+
+// 选择文本
+::selection {
+  background-color: rgba($primary-color, 0.2);
+  color: $primary-color;
+}
+
+::-moz-selection {
+  background-color: rgba($primary-color, 0.2);
+  color: $primary-color;
+}
+
+// 滚动条
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+// 暗色主题滚动条
+.dark {
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}

@@ -1,0 +1,278 @@
+/**
+ * 组件样式
+ */
+
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+// 布局组件
+.layout {
+  min-height: 100vh;
+  @include flex(column);
+
+  &__header {
+    height: $header-height;
+    background: var(--bg-color, $bg-color);
+    border-bottom: 1px solid var(--border-color-light, $border-color-light);
+    @include flex(row, space-between, center);
+    padding: 0 $spacing-lg;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-index-fixed;
+    @include transition(all);
+  }
+
+  &__sidebar {
+    width: $sidebar-width;
+    background: var(--bg-color, $bg-color);
+    border-right: 1px solid var(--border-color-light, $border-color-light);
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    z-index: $z-index-sticky;
+    overflow-y: auto;
+    @include scrollbar();
+    @include transition(width);
+
+    &--collapsed {
+      width: $sidebar-collapsed-width;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    margin-top: $header-height;
+    margin-left: $sidebar-width;
+    padding: $spacing-lg;
+    @include transition(margin-left);
+
+    &--sidebar-collapsed {
+      margin-left: $sidebar-collapsed-width;
+    }
+
+    &--no-sidebar {
+      margin-left: 0;
+    }
+  }
+}
+
+// 卡片组件
+.card {
+  @include card();
+  margin-bottom: $spacing-lg;
+
+  &__header {
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid var(--border-color-lighter, $border-color-lighter);
+    margin-bottom: $spacing-md;
+    @include flex(row, space-between, center);
+
+    &-title {
+      font-size: $font-size-large;
+      font-weight: 500;
+      color: var(--text-color-primary, $text-color-primary);
+    }
+
+    &-extra {
+      color: var(--text-color-secondary, $text-color-secondary);
+    }
+  }
+
+  &__body {
+    // 卡片主体内容
+  }
+
+  &__footer {
+    padding-top: $spacing-md;
+    border-top: 1px solid var(--border-color-lighter, $border-color-lighter);
+    margin-top: $spacing-md;
+    text-align: right;
+  }
+
+  &--shadow {
+    box-shadow: $box-shadow-base;
+  }
+
+  &--hoverable {
+    cursor: pointer;
+    @include transition(box-shadow);
+
+    &:hover {
+      box-shadow: $box-shadow-dark;
+    }
+  }
+}
+
+// 按钮组件
+.btn {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: $border-radius-md;
+  @include transition(all);
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // 按钮尺寸
+  &--small {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-small;
+  }
+
+  &--large {
+    padding: $spacing-md $spacing-lg;
+    font-size: $font-size-large;
+  }
+
+  // 按钮类型
+  &--primary {
+    @include button-variant(#fff, $primary-color, $primary-color);
+  }
+
+  &--success {
+    @include button-variant(#fff, $success-color, $success-color);
+  }
+
+  &--warning {
+    @include button-variant(#fff, $warning-color, $warning-color);
+  }
+
+  &--danger {
+    @include button-variant(#fff, $danger-color, $danger-color);
+  }
+
+  &--info {
+    @include button-variant(#fff, $info-color, $info-color);
+  }
+
+  &--default {
+    @include button-variant(var(--text-color-regular, $text-color-regular), var(--bg-color, $bg-color), var(--border-color, $border-color));
+  }
+}
+
+// 加载组件
+.loading {
+  @include flex(column, center, center);
+  padding: $spacing-xl;
+  color: var(--text-color-secondary, $text-color-secondary);
+
+  &__spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-color-light, $border-color-light);
+    border-top: 3px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  &__text {
+    margin-top: $spacing-md;
+    font-size: $font-size-small;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// 空状态组件
+.empty {
+  @include flex(column, center, center);
+  padding: $spacing-xxl;
+  color: var(--text-color-secondary, $text-color-secondary);
+
+  &__icon {
+    font-size: 64px;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+
+  &__text {
+    font-size: $font-size-base;
+  }
+
+  &__description {
+    font-size: $font-size-small;
+    margin-top: $spacing-sm;
+    opacity: 0.8;
+  }
+}
+
+// 标签组件
+.tag {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-small;
+  line-height: 1;
+  color: var(--text-color-regular, $text-color-regular);
+  background-color: var(--bg-color, $bg-color);
+  border: 1px solid var(--border-color-light, $border-color-light);
+  border-radius: $border-radius-sm;
+
+  &--primary {
+    color: $primary-color;
+    background-color: rgba($primary-color, 0.1);
+    border-color: rgba($primary-color, 0.2);
+  }
+
+  &--success {
+    color: $success-color;
+    background-color: rgba($success-color, 0.1);
+    border-color: rgba($success-color, 0.2);
+  }
+
+  &--warning {
+    color: $warning-color;
+    background-color: rgba($warning-color, 0.1);
+    border-color: rgba($warning-color, 0.2);
+  }
+
+  &--danger {
+    color: $danger-color;
+    background-color: rgba($danger-color, 0.1);
+    border-color: rgba($danger-color, 0.2);
+  }
+}
+
+// 页面头部
+.page-header {
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid var(--border-color-lighter, $border-color-lighter);
+  @include flex(row, space-between, center);
+
+  &__title {
+    font-size: $font-size-extra-large;
+    font-weight: 500;
+    color: var(--text-color-primary, $text-color-primary);
+  }
+
+  &__description {
+    margin-top: $spacing-xs;
+    color: var(--text-color-secondary, $text-color-secondary);
+    font-size: $font-size-base;
+  }
+
+  &__actions {
+    @include flex(row, flex-end, center);
+    gap: $spacing-sm;
+  }
+}
