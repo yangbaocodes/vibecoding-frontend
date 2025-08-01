@@ -1,0 +1,7 @@
+ - 请使用 Figma MCP 工具分析这个设计：https://www.figma.com/design/qbjhtp5vlNvUR3F53fGYdA/vibe-coding?node-id=37-777&t=U2lA97XF0KTGXkme-4
+ - 导航栏header已在其他地方实现，请不要重复实现
+ - 暂时只mock2024、2025的数据，数据简单一点，数据是统计文件转换数量的
+ - 尽量使用element plus组件
+ - 要考虑适配不同大小的屏幕
+ - 自动添加到路由中
+ - 注意代码隔离，HTML、SCSS、TS放到不同的文件中

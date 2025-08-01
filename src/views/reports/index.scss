@@ -1,0 +1,303 @@
+// Reports 页面样式 - 完全基于 Figma 设计
+.reports-page {
+  // width: calc(100vw - 260px); // 减去侧边栏宽度
+  height: calc(100vh - 60px); // 减去导航栏高度
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; // 允许滚动
+  min-width: 800px; // 设置最小宽度，确保内容完整显示
+  
+  // 年份选择器 - 按照 Figma 位置和样式
+  .year-selector {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    
+    .year-button {
+      width: 120px; // Figma精确尺寸
+      height: 39px; // Figma精确尺寸
+      border-radius: 4px; // Figma圆角
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif; // Figma字体
+      font-size: 16px; // Figma字体大小
+      font-weight: 500; // Figma字体粗细(Medium)
+      line-height: 22px; // Figma行高
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      
+      // 未选中状态 - 灰色背景 (基于Figma 2024按钮)
+      background-color: rgb(206, 206, 206); // r:0.806, g:0.806, b:0.806
+      color: #ffffff;
+      
+      // 选中状态 - 蓝色背景 (基于Figma 2025按钮)
+      &.active {
+        background-color: rgb(1, 51, 160); // r:0.004, g:0.2, b:0.627
+        color: #ffffff;
+      }
+      
+      // 悬停效果
+      &:hover:not(.active) {
+        background-color: rgb(186, 186, 186); // 稍微深一点的灰色
+      }
+    }
+  }
+  
+  // 主要内容区域
+  .main-content {
+    display: grid;
+    grid-template-columns: minmax(40px, 80px) minmax(600px, 1fr); // 确保数据区域有足够宽度
+    grid-template-rows: minmax(30px, auto) minmax(400px, 1fr); // 确保数据区域有足够高度
+    gap: clamp(4px, 1vw, 8px); // 响应式间距
+    flex: 1;
+    min-height: 0;
+    min-width: 700px; // 设置最小宽度
+    overflow: visible; // 允许内容溢出显示
+    width: 100%; // 确保填满容器
+    
+    // 左上角空白区域（对应31天头部的位置）
+    .top-left-spacer {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    
+    // 31天头部 - 占据右上角
+    .days-header {
+      grid-column: 2;
+      grid-row: 1;
+      display: grid;
+      grid-template-columns: repeat(31, minmax(20px, 1fr)); // 响应式宽度，最小20px
+      gap: clamp(2px, 0.5vw, 12px); // 响应式间距，最大12px符合Figma
+      min-width: 620px; // 确保31天有足够宽度显示
+      overflow-x: auto; // 允许水平滚动
+      
+      .day-header {
+        aspect-ratio: 1; // 保持正方形比例
+        min-width: 20px; // 最小宽度确保可读性
+        min-height: 20px; // 最小高度确保可读性
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter', sans-serif; // Figma字体
+        font-size: clamp(10px, 1.2vw, 14px); // 响应式字号，最大14px符合Figma
+        font-weight: 400; // Figma字重
+        line-height: 1.4; // 相对行高保持比例
+        color: #606266; // Figma文字颜色
+        border-radius: 4px; // Figma圆角
+        background-color: transparent;
+      }
+    }
+    
+    // 月份标签列 - 占据左下角，与数据区域对齐
+    .months-column {
+      grid-column: 1;
+      grid-row: 2;
+      display: grid;
+      grid-template-rows: repeat(12, minmax(30px, 1fr)); // 与数据网格完全相同
+      gap: clamp(2px, 0.8vw, 14px); // 与数据网格完全相同
+      min-height: 400px; // 确保12个月有足够高度显示
+      
+      .month-row {
+        display: flex;
+        align-items: center; // 垂直居中
+        justify-content: center; // 水平居中
+        min-height: 30px; // 确保与数据行高度匹配
+        
+        .month-card {
+          aspect-ratio: 1; // 保持正方形比例，与数据卡片一致
+          min-width: 30px; // 合适的最小宽度
+          min-height: 30px; // 合适的最小高度
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px; // Figma圆角
+          background-color: transparent; // 去除背景色
+          
+          .month-text {
+            font-family: 'Inter', sans-serif; // Figma字体
+            font-size: clamp(10px, 1.2vw, 14px); // 响应式字号，最大14px符合Figma
+            font-weight: 400; // Figma字重
+            line-height: 1.4; // 相对行高保持比例
+            color: #606266; // Figma文字颜色
+          }
+        }
+      }
+    }
+    
+    // 数据网格 - 占据右下角
+    .data-grid {
+      grid-column: 2;
+      grid-row: 2;
+      display: grid;
+      grid-template-rows: repeat(12, minmax(30px, 1fr)); // 响应式高度，最小30px
+      gap: clamp(2px, 0.8vw, 14px); // 响应式间距，最大14px符合Figma
+      min-height: 400px; // 确保12行有足够高度
+      min-width: 620px; // 确保31列有足够宽度
+      overflow: visible; // 允许内容可见
+      
+      .data-row {
+        display: grid;
+        grid-template-columns: repeat(31, minmax(20px, 1fr)); // 响应式宽度，最小20px
+        gap: clamp(2px, 0.5vw, 12px); // 响应式间距，最大12px符合Figma
+        min-height: 30px; // 最小高度确保可读性
+        min-width: 620px; // 确保31列有足够宽度
+        align-items: center; // 数据卡片垂直居中
+        
+        .data-cell {
+          aspect-ratio: 1; // 保持正方形比例
+          min-width: 20px; // 最小宽度确保可读性
+          min-height: 20px; // 最小高度确保可读性
+          border-radius: 4px; // Figma圆角
+          background-color: rgba(1, 51, 160, 0.05); // Figma默认背景色
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Inter', sans-serif; // Figma字体
+          font-size: clamp(10px, 1.2vw, 14px); // 响应式字号，最大14px符合Figma
+          font-weight: 400; // Figma字重
+          line-height: 1.4; // 相对行高保持比例
+          color: #606266; // Figma文字颜色
+          
+          // 基于Figma设计的颜色级别 - 蓝色(#0133A0)不同透明度
+          &.color-empty {
+            background-color: rgba(1, 51, 160, 0.05);
+          }
+          
+          &.color-level-1 {
+            background-color: rgba(1, 51, 160, 0.25);
+          }
+          
+          &.color-level-2 {
+            background-color: rgba(1, 51, 160, 0.50);
+          }
+          
+          &.color-level-3 {
+            background-color: rgba(1, 51, 160, 0.75);
+          }
+          
+          &.color-level-4 {
+            background-color: rgba(1, 51, 160, 1.0);
+          }
+          
+          .cell-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            .cell-value {
+              font-family: 'Inter', sans-serif; // Figma字体
+              font-size: clamp(10px, 1.2vw, 14px); // 响应式字号，最大14px符合Figma
+              font-weight: 400; // Figma字重
+              line-height: 1.4; // 相对行高保持比例
+              color: #ffffff; // 统一使用白色文字
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // 底部统计框 - 颜色图例 (基于Figma设计尺寸)
+  .bottom-stats {
+    display: flex;
+    gap: 12px; // Figma中frame之间的间距
+    margin-top: 24px;
+    margin-left: 85px; // 向右调整，与数据区域左边距对齐
+    align-items: center;
+    justify-content: flex-start;
+    
+    .stat-box {
+      width: 44px; // 固定宽度，基于Figma设计
+      height: 54px; // 固定高度，基于Figma设计
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px; // Figma中rectangle和text之间的间距
+      
+      .stat-color {
+        width: 24px; // Figma中rectangle的确切尺寸
+        height: 24px; // Figma中rectangle的确切尺寸
+        border-radius: 4px; // Figma中的圆角
+        flex-shrink: 0;
+      }
+      
+      .stat-text {
+        width: 44px; // 文字区域宽度
+        height: 22px; // 文字区域高度
+        font-size: 14px; // Figma中的字体大小
+        font-weight: 400;
+        color: #606266;
+        text-align: center;
+        line-height: 22px; // 垂直居中
+      }
+    }
+  }
+}
+
+// 响应式设计 - 大屏幕优化
+@media (max-width: 1920px) {
+  .reports-page {
+    .main-content {      
+      .data-grid {
+        min-width: 600px; // 更新为新的最小宽度
+      }
+    }
+  }
+}
+
+// 响应式设计 - 移动端适配
+@media (max-width: 768px) {
+  .reports-page {
+    padding: 16px;
+    min-width: 100vw; // 移动端占满屏幕
+    
+    .year-selector {
+      margin-bottom: 24px;
+      
+      .year-button {
+        width: 100px;
+        height: 36px;
+        font-size: 14px;
+      }
+    }
+    
+    .main-content {
+      display: flex; // 移动端改为flex布局
+      flex-direction: column;
+      min-width: 100%;
+      
+      .months-column {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        margin-bottom: 16px;
+        
+        .month-row {
+          .month-card {
+            min-width: 60px;
+          }
+        }
+      }
+      
+      .data-grid {
+        width: 100%;
+        overflow-x: auto;
+        min-width: 600px;
+      }
+    }
+    
+    .bottom-stats {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+}

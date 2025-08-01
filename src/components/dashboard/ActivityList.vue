@@ -101,7 +101,7 @@ const handleViewAll = () => {
   &:hover {
     background-color: rgba($primary-color, 0.02);
     border-radius: $border-radius-sm;
-    margin: 0 -$spacing-sm;
+    margin: 0 - $spacing-sm;
     padding-left: $spacing-sm;
     padding-right: $spacing-sm;
   }

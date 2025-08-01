@@ -25,6 +25,16 @@ const routes: RouteRecordRaw[] = [
           requiresAuth: true,
           icon: 'House'
         }
+      },
+      {
+        path: '/reports',
+        name: 'REPORTS',
+        component: () => import('@/views/reports/index.vue'),
+        meta: {
+          title: 'Reports',
+          requiresAuth: true,
+          icon: 'Document'
+        }
       }
     ]
   },
@@ -82,6 +92,13 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
   if (to.meta?.title) {
     document.title = `${to.meta.title} - VibeCoding`
   }
+
+  // 开发环境：跳过所有认证检查
+  // if (import.meta.env.DEV) {
+  //   console.warn('🚫 开发模式：已跳过认证检查')
+  //   next()
+  //   return
+  // }
 
   // 检查是否需要认证
   if (to.meta?.requiresAuth) {
