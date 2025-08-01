@@ -41,6 +41,12 @@ declare module '@element-plus/icons-vue' {
   export const Lock: DefineComponent<{}, {}, any>
   export const Refresh: DefineComponent<{}, {}, any>
   export const QuestionFilled: DefineComponent<{}, {}, any>
+  export const Upload: DefineComponent<{}, {}, any>
+  export const UploadFilled: DefineComponent<{}, {}, any>
+  export const Plus: DefineComponent<{}, {}, any>
+  export const Loading: DefineComponent<{}, {}, any>
+  export const Delete: DefineComponent<{}, {}, any>
+  export const Check: DefineComponent<{}, {}, any>
   // 可以根据需要添加其他图标组件
 }
 

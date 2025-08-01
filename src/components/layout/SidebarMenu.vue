@@ -51,6 +51,16 @@ const { sidebarCollapsed } = appStore
 // 菜单项配置
 const menuItems: MenuItem[] = [
   {
+    id: 'converter',
+    name: 'Converter',
+    path: '/converter',
+    icon: 'Upload',
+    meta: {
+      title: 'navigation.converter',
+      requiresAuth: true
+    }
+  },
+  {
     id: 'dashboard',
     name: 'Dashboard',
     path: '/dashboard',

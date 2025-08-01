@@ -90,6 +90,7 @@
   "navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "converter": "Converter",
     "about": "About",
     "contact": "Contact",
     "profile": "Profile",
@@ -125,6 +126,38 @@
     "uploadFailed": "File upload failed",
     "downloadSuccess": "File downloaded successfully",
     "downloadFailed": "File download failed"
+  },
+  "converter": {
+    "description": "Upload your resume, and we will convert it to match the Cognizant resume template.",
+    "selectFiles": "Select Files",
+    "delete": "delete",
+    "dropFiles": "Drop files here",
+    "selectedFiles": "Selected Files",
+    "filesAdded": "{count} file(s) added successfully",
+    "fileRemoved": "File '{name}' removed",
+    "allFilesCleared": "All files cleared",
+    "duplicateFiles": "Some files were skipped (duplicates)",
+    "processing": "Processing files...",
+    "processingError": "Error processing files",
+    "uploadZone": {
+      "description_1": "Drag docx/pdf files here. or",
+      "description_2": "click to upload",
+      "instruction": "Max 10 files, 5MB each."
+    },
+    "dragHere": "Drag your files here to upload",
+    "uploadAll": "Upload All Files",
+    "converterInfo": {
+      "title": "Converter Instructions",
+      "supportedFormats": "Supported formats: DOCX, PDF",
+      "maxSize": "Maximum file size: {size}",
+      "dragDrop": "Supports drag and drop upload",
+      "todo": "Note: Actual conversion function is not implemented yet, currently only recording file paths"
+    },
+    "errors": {
+      "fileTooLarge": "File '{name}' is too large. Maximum size is {size}",
+      "invalidType": "File '{name}' has invalid type. Only DOCX and PDF files are supported",
+      "uploadLimitExceeded": "Upload limit exceeded. Maximum 10 files allowed."
+    }
   },
   "error": {
     "404": "Page Not Found",

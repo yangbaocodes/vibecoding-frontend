@@ -13,7 +13,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: ROUTE_NAMES.HOME,
-    redirect: '/dashboard',
+    // todo cf 之后修改成dashboard
+    redirect: '/converter',
     component: () => import('@/layouts/DefaultLayout.vue'),
     children: [
       {
@@ -24,6 +25,17 @@ const routes: RouteRecordRaw[] = [
           title: 'Dashboard',
           requiresAuth: true,
           icon: 'House'
+        }
+      },
+      {
+        path: '/converter',
+        name: ROUTE_NAMES.CONVERTER,
+        component: () => import('@/views/Converter.vue'),
+        meta: {
+          title: 'Converter',
+          // todo cf 之后修改成true
+          requiresAuth: false,
+          icon: 'Upload'
         }
       }
     ]
@@ -110,7 +122,7 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
     if (to.meta?.roles && Array.isArray(to.meta.roles)) {
       if (!userStore.hasAnyRole(to.meta.roles)) {
         // 没有权限，跳转到首页或403页面
-        next({ name: ROUTE_NAMES.DASHBOARD })
+        next({ name: ROUTE_NAMES.CONVERTER })
         return
       }
     }
@@ -118,7 +130,7 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
 
   // 如果已登录用户访问登录页，重定向到首页
   if (to.name === ROUTE_NAMES.LOGIN && userStore.isAuthenticated) {
-    next({ name: ROUTE_NAMES.DASHBOARD })
+    next({ name: ROUTE_NAMES.CONVERTER })
     return
   }
 
