@@ -3,23 +3,23 @@
     <!-- 头部 -->
     <header class="layout__header">
       <div class="header-left">
-        <ElButton :icon="sidebarCollapsed ? 'Expand' : 'Fold'" link @click="toggleSidebar" />
+        <!-- <ElButton :icon="sidebarCollapsed ? 'Expand' : 'Fold'" link @click="toggleSidebar" /> -->
         <h1 class="header-title">{{ $t('app.title') }}</h1>
       </div>
       <div class="header-right">
-        <LanguageSelector />
-        <ThemeToggle />
+        <!-- <LanguageSelector /> -->
+        <!-- <ThemeToggle /> -->
         <UserMenu />
       </div>
     </header>
 
     <!-- 侧边栏 -->
-    <aside :class="['layout__sidebar', { 'layout__sidebar--collapsed': sidebarCollapsed }]">
+    <!-- <aside :class="['layout__sidebar', { 'layout__sidebar--collapsed': sidebarCollapsed }]">
       <SidebarMenu />
-    </aside>
+    </aside> -->
 
     <!-- 主内容区 -->
-    <main :class="['layout__content', { 'layout__content--sidebar-collapsed': sidebarCollapsed }]">
+    <main>
       <ElScrollbar>
         <RouterView />
       </ElScrollbar>
@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app'
-import SidebarMenu from '@/components/layout/SidebarMenu.vue'
+//import SidebarMenu from '@/components/layout/SidebarMenu.vue'
 import LanguageSelector from '@/components/layout/LanguageSelector.vue'
 import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 import UserMenu from '@/components/layout/UserMenu.vue'
@@ -84,7 +84,7 @@ const { sidebarCollapsed, isMobile, toggleSidebar, setSidebarCollapsed } = appSt
   }
 
   .layout__content {
-    margin-left: 0 !important;
+    //margin-left: 0 !important;
   }
 }
 </style>
