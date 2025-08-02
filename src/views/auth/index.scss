@@ -1,0 +1,306 @@
+// Auth 页面样式 - 基于 Figma 设计
+.auth-page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  
+  // 渐变背景 - 基于Figma精确设计
+  .background-gradient {
+    width: 100%;
+    height: 100%;
+    // Figma精确渐变颜色: rgb(0, 51, 159) to rgb(0, 27, 82)
+    background: linear-gradient(135deg, #00339F 0%, #001B52 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  // 主容器 - 基于Figma尺寸
+  .auth-container {
+    width: 100%;
+    max-width: 1088px; // Figma设计宽度
+    height: 788px; // Figma设计高度
+    background: white;
+    border-radius: 24px; // Figma圆角
+    box-shadow: 0 0 48px rgba(0, 0, 0, 0.25); // Figma阴影
+    display: flex;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out;
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  // 左侧面板 - 基于Figma截屏背景 (554px)
+  .left-panel {
+    width: 554px; // Figma精确宽度
+    position: relative;
+    
+    .background-image {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // 默认渐变背景（如果图片加载失败）
+      background: linear-gradient(135deg, #00339F 0%, #001B52 100%);
+      
+      .screenshot-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+    }
+  }
+  
+  // 右侧面板 - 基于Figma登录表单区域
+  .right-panel {
+    width: 534px; // 1088px - 554px = 534px (更精确的计算)
+    padding: 64px 51px; // 基于Figma Frame 2的位置计算
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    
+      .login-form-container {
+        width: 100%;
+        
+        .login-header {
+          text-align: left; // 改为左对齐
+          margin-bottom: 45px;
+          
+          .login-title {
+            color: #303133; // 基于Figma的文本填充色
+            font-size: 24px; // Figma字体大小
+            font-weight: 700; // Figma Bold = 700
+            font-family: 'Inter', sans-serif;
+            line-height: 28px; // Figma行高: 28.0px
+            margin: 0; // 清除默认margin
+            letter-spacing: 0; // Figma letterSpacing: 0.0
+          }
+        }
+        
+        .login-form {
+          .form-item {
+            margin-bottom: 42px; // Figma精确间距: itemSpacing: 42.0
+            
+            .input-label {
+              color: #606266; // Element Plus标准标签颜色
+              font-size: 14px;
+              font-weight: 500;
+              margin-bottom: 8px; // Figma itemSpacing: 8.0
+              text-align: left;
+              display: block; // 确保标签独占一行
+            }
+            
+            .form-input {
+              .el-input__inner {
+                height: 48px; // Large size
+                border-radius: 8px;
+                border: 1px solid #DCDFE6; // Element Plus默认边框色
+                font-size: 16px;
+                color: #303133; // Figma text-color-primary
+                background: #FFFFFF;
+                
+                &::placeholder {
+                  color: #C0C4CC; // Element Plus placeholder颜色
+                }
+                
+                &:focus {
+                  border-color: #0133A0;
+                  box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
+                  outline: none;
+                }
+                
+                &:hover:not(:focus) {
+                  border-color: #C0C4CC;
+                }
+              }
+            }
+            
+            // 验证码输入框组样式 - 在同一个线框内
+            .verification-input-container {
+              width: 100%; // 确保容器占满整个宽度
+              
+              .verification-input {
+                width: 100%; // 确保输入框占满容器宽度
+                
+                .el-input__inner {
+                  padding-right: 120px; // 为内置按钮留出空间
+                  
+                  &:focus {
+                    border-color: #0133A0;
+                    box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
+                  }
+                }
+                
+                .el-input__suffix {
+                  right: 12px; // 按钮右边距
+                }
+              }
+              
+              .send-code-text-button {
+                height: auto !important;
+                padding: 8px 0 !important;
+                min-height: auto !important;
+                font-size: 14px;
+                font-weight: 500;
+                color: #0133A0 !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                text-decoration: none;
+                cursor: pointer;
+                
+                &:hover:not(:disabled) {
+                  color: #002080 !important;
+                  background: transparent !important;
+                  box-shadow: none !important;
+                  text-decoration: underline;
+                }
+                
+                &:disabled {
+                  color: #C0C4CC !important;
+                  background: transparent !important;
+                  cursor: not-allowed;
+                  text-decoration: none;
+                }
+                
+                &:focus {
+                  background: transparent !important;
+                  box-shadow: none !important;
+                  outline: none;
+                }
+                
+                &:active {
+                  background: transparent !important;
+                  box-shadow: none !important;
+                }
+              }
+            }
+          }
+        
+        // 错误提示样式 (基于Figma设计)
+        .error-message {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 12px;
+          margin-bottom: 20px;
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 6px;
+          color: #dc2626;
+          font-size: 14px;
+          
+          .error-icon {
+            color: #dc2626;
+            font-size: 16px;
+          }
+        }
+        
+        .login-button {
+          width: 100%;
+          height: 48px;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: 8px;
+          background: #0133A0; // 匹配Figma主色调
+          border-color: #0133A0;
+          
+          &:hover {
+            background: #002080;
+            border-color: #002080;
+          }
+          
+          &:disabled {
+            background: #a0a0a0;
+            border-color: #a0a0a0;
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 1200px) {
+  .auth-page {
+    .auth-container {
+      max-width: 90%;
+      height: auto;
+      min-height: 600px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-page {
+    .background-gradient {
+      padding: 10px;
+    }
+    
+    .auth-container {
+      flex-direction: column;
+      max-width: 100%;
+      height: auto;
+      min-height: 100vh;
+    }
+    
+    .left-panel {
+      .content-overlay {
+        padding: 40px 20px;
+        
+        .brand-title {
+          font-size: 2rem;
+        }
+        
+        .brand-subtitle {
+          font-size: 1.5rem;
+        }
+        
+        .features-list {
+          display: none; // 在移动端隐藏特性列表
+        }
+      }
+    }
+    
+    .right-panel {
+      width: 100%;
+      padding: 40px 30px;
+      
+      .login-form-container {
+        .login-header {
+          margin-bottom: 30px;
+          
+          .login-title {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    .right-panel {
+      padding: 30px 20px;
+    }
+  }
+}

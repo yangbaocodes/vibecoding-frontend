@@ -39,19 +39,13 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/auth',
-    component: () => import('@/layouts/AuthLayout.vue'),
-    children: [
-      {
-        path: '/auth/login',
-        name: ROUTE_NAMES.LOGIN,
-        component: () => import('@/views/auth/Login.vue'),
-        meta: {
-          title: 'Login',
-          requiresAuth: false
-        }
-      }
-    ]
+    path: '/auth/login',
+    name: ROUTE_NAMES.LOGIN,
+    component: () => import('@/views/auth/index.vue'),
+    meta: {
+      title: 'Login',
+      requiresAuth: false
+    }
   },
   {
     path: '/404',
