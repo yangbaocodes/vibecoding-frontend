@@ -23,7 +23,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'prefer-const': 'error',
-    'no-var': 'error'
+    'no-var': 'error',
+    'prettier/prettier': ['error', { 'endOfLine': 'auto' }]
   },
   overrides: [
     {

@@ -22,6 +22,7 @@ export const ROUTE_NAMES = {
   HOME: 'Home',
   LOGIN: 'Login',
   DASHBOARD: 'Dashboard',
+  CONVERTER: 'Converter',
   NOT_FOUND: 'NotFound'
 } as const
 
