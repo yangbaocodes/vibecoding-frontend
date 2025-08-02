@@ -89,9 +89,8 @@ const triggerFileInput = () => {
   fileInputRef.value?.click()
 }
 
-const validateFiles = (files: File[]): { validFiles: File[]; hasLimitExceeded: boolean } => {
+const validateFiles = (files: File[]): File[] => {
   const validFiles: File[] = []
-  let hasLimitExceeded = false
 
   for (const file of files) {
     // 检查文件类型
@@ -104,14 +103,7 @@ const validateFiles = (files: File[]): { validFiles: File[]; hasLimitExceeded: b
     validFiles.push(file)
   }
 
-  // 检查文件数量限制 (最多10个文件)
-  if (validFiles.length > 10) {
-    hasLimitExceeded = true
-    // 只保留前10个文件
-    validFiles.splice(10)
-  }
-
-  return { validFiles, hasLimitExceeded }
+  return validFiles
 }
 
 const handleFileSelect = (event: Event) => {
@@ -154,20 +146,14 @@ const processFiles = async (files: File[]) => {
   isProcessing.value = true
 
   try {
-    const { validFiles, hasLimitExceeded } = validateFiles(files)
-
-    // 如果有限制超出，显示错误提示
-    if (hasLimitExceeded) {
-      ElMessage.error(t('converter.errors.uploadLimitExceeded'))
-    }
+    const validFiles = validateFiles(files)
 
     if (validFiles.length > 0) {
       emit('files-selected', validFiles)
-      ElMessage.success(t('converter.filesAdded', { count: validFiles.length }))
     }
   } catch (error) {
     console.error('Error processing files:', error)
-    ElMessage.error(t('converter.processingError'))
+    ElMessage.error('Error processing files')
   } finally {
     isProcessing.value = false
   }
