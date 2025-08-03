@@ -3,7 +3,7 @@
  */
 
 import Request from '@/utils/request'
-import type { ApiResponse, User } from '@/types'
+import type { ApiResponse, User, LoginResponse } from '@/types'
 
 // 用户相关API
 export const userApi = {
@@ -54,6 +54,23 @@ export const userApi = {
    */
   logout(): Promise<ApiResponse<void>> {
     return Request.post('/auth/logout')
+  },
+
+  /**
+   * 发送验证码
+   */
+  sendVerificationCode(data: { email: string }): Promise<ApiResponse<void>> {
+    return Request.post('/auth/send-verification-code', data)
+  },
+
+  /**
+   * 验证码登录或注册
+   */
+  loginOrRegister(data: {
+    email: string
+    verificationCode: string
+  }): Promise<ApiResponse<LoginResponse>> {
+    return Request.post('/auth/login-or-register', data)
   }
 }
 

@@ -20,13 +20,22 @@ export interface PaginationData<T = any> {
 
 // 用户类型
 export interface User {
-  id: string
+  id: number
   username: string
   email: string
+  nickname?: string
   avatar?: string
   role: string
-  createdAt: string
-  updatedAt: string
+  status: number
+  createdAt?: string
+  updatedAt?: string
+}
+
+// 登录响应数据类型
+export interface LoginResponse {
+  token: string
+  user: User
+  isNewUser: boolean
 }
 
 // 路由元信息类型
