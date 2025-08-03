@@ -24,7 +24,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'prefer-const': 'error',
     'no-var': 'error',
-    'prettier/prettier': ['error', { 'endOfLine': 'auto' }]
+    'prettier/prettier': ['error', { endOfLine: 'auto' }]
   },
   overrides: [
     {

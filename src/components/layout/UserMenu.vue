@@ -13,6 +13,10 @@
           <ElIcon><User /></ElIcon>
           <span>{{ $t('user.profile') }}</span>
         </ElDropdownItem>
+        <ElDropdownItem command="reports">
+          <ElIcon><Document /></ElIcon>
+          <span>Reports</span>
+        </ElDropdownItem>
         <ElDropdownItem command="settings">
           <ElIcon><Setting /></ElIcon>
           <span>{{ $t('user.settings') }}</span>
@@ -28,7 +32,7 @@
 
 <script setup lang="ts">
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { User, Setting, SwitchButton, ArrowDown } from '@element-plus/icons-vue'
+import { User, Setting, SwitchButton, ArrowDown, Document } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store/modules/user'
@@ -50,6 +54,11 @@ const handleCommand = async (command: string) => {
       // 跳转到个人资料页面
       // router.push('/profile')
       ElMessage.info('Profile page is coming soon!')
+      break
+
+    case 'reports':
+      // 跳转到报告页面
+      router.push('/reports')
       break
 
     case 'settings':

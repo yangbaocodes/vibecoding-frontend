@@ -56,7 +56,7 @@ service.interceptors.response.use(
 
     // 检查业务状态码
     if (data.code === HTTP_STATUS.OK) {
-      return data.data
+      return data // 返回完整的ApiResponse对象
     } else {
       // 处理业务错误
       ElMessage.error(data.message || 'Request failed')
