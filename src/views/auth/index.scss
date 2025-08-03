@@ -10,7 +10,7 @@
     width: 100%;
     height: 100%;
     // Figma精确渐变颜色: rgb(0, 51, 159) to rgb(0, 27, 82)
-    background: linear-gradient(135deg, #00339F 0%, #001B52 100%);
+    background: linear-gradient(135deg, #00339f 0%, #001b52 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@
       align-items: center;
       justify-content: center;
       // 默认渐变背景（如果图片加载失败）
-      background: linear-gradient(135deg, #00339F 0%, #001B52 100%);
+      background: linear-gradient(135deg, #00339f 0%, #001b52 100%);
       
       .screenshot-image {
         width: 100%;
@@ -76,123 +76,123 @@
     justify-content: center;
     position: relative;
     
-      .login-form-container {
-        width: 100%;
+    .login-form-container {
+      width: 100%;
         
-        .login-header {
-          text-align: left; // 改为左对齐
-          margin-bottom: 45px;
+      .login-header {
+        text-align: left; // 改为左对齐
+        margin-bottom: 45px;
           
-          .login-title {
-            color: #303133; // 基于Figma的文本填充色
-            font-size: 24px; // Figma字体大小
-            font-weight: 700; // Figma Bold = 700
-            font-family: 'Inter', sans-serif;
-            line-height: 28px; // Figma行高: 28.0px
-            margin: 0; // 清除默认margin
-            letter-spacing: 0; // Figma letterSpacing: 0.0
-          }
+        .login-title {
+          color: #303133; // 基于Figma的文本填充色
+          font-size: 24px; // Figma字体大小
+          font-weight: 700; // Figma Bold = 700
+          font-family: 'Inter', sans-serif;
+          line-height: 28px; // Figma行高: 28.0px
+          margin: 0; // 清除默认margin
+          letter-spacing: 0; // Figma letterSpacing: 0.0
         }
+      }
         
-        .login-form {
-          .form-item {
-            margin-bottom: 42px; // Figma精确间距: itemSpacing: 42.0
+      .login-form {
+        .form-item {
+          margin-bottom: 42px; // Figma精确间距: itemSpacing: 42.0
             
-            .input-label {
-              color: #606266; // Element Plus标准标签颜色
+          .input-label {
+            color: #606266; // Element Plus标准标签颜色
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px; // Figma itemSpacing: 8.0
+            text-align: left;
+            display: block; // 确保标签独占一行
+          }
+            
+          .form-input {
+            .el-input__inner {
+              height: 48px; // Large size
+              border-radius: 8px;
+              border: 1px solid #dcdfe6; // Element Plus默认边框色
+              font-size: 16px;
+              color: #303133; // Figma text-color-primary
+              background: #ffffff;
+                
+              &::placeholder {
+                color: #c0c4cc; // Element Plus placeholder颜色
+              }
+                
+              &:focus {
+                border-color: #0133a0;
+                box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
+                outline: none;
+              }
+                
+              &:hover:not(:focus) {
+                border-color: #c0c4cc;
+              }
+            }
+          }
+            
+          // 验证码输入框组样式 - 在同一个线框内
+          .verification-input-container {
+            width: 100%; // 确保容器占满整个宽度
+              
+            .verification-input {
+              width: 100%; // 确保输入框占满容器宽度
+                
+              .el-input__inner {
+                padding-right: 120px; // 为内置按钮留出空间
+                  
+                &:focus {
+                  border-color: #0133a0;
+                  box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
+                }
+              }
+                
+              .el-input__suffix {
+                right: 12px; // 按钮右边距
+              }
+            }
+              
+            .send-code-text-button {
+              height: auto !important;
+              padding: 8px 0 !important;
+              min-height: auto !important;
               font-size: 14px;
               font-weight: 500;
-              margin-bottom: 8px; // Figma itemSpacing: 8.0
-              text-align: left;
-              display: block; // 确保标签独占一行
-            }
-            
-            .form-input {
-              .el-input__inner {
-                height: 48px; // Large size
-                border-radius: 8px;
-                border: 1px solid #DCDFE6; // Element Plus默认边框色
-                font-size: 16px;
-                color: #303133; // Figma text-color-primary
-                background: #FFFFFF;
+              color: #0133a0 !important;
+              background: transparent !important;
+              border: none !important;
+              box-shadow: none !important;
+              text-decoration: none;
+              cursor: pointer;
                 
-                &::placeholder {
-                  color: #C0C4CC; // Element Plus placeholder颜色
-                }
-                
-                &:focus {
-                  border-color: #0133A0;
-                  box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
-                  outline: none;
-                }
-                
-                &:hover:not(:focus) {
-                  border-color: #C0C4CC;
-                }
-              }
-            }
-            
-            // 验证码输入框组样式 - 在同一个线框内
-            .verification-input-container {
-              width: 100%; // 确保容器占满整个宽度
-              
-              .verification-input {
-                width: 100%; // 确保输入框占满容器宽度
-                
-                .el-input__inner {
-                  padding-right: 120px; // 为内置按钮留出空间
-                  
-                  &:focus {
-                    border-color: #0133A0;
-                    box-shadow: 0 0 0 2px rgba(1, 51, 160, 0.1);
-                  }
-                }
-                
-                .el-input__suffix {
-                  right: 12px; // 按钮右边距
-                }
-              }
-              
-              .send-code-text-button {
-                height: auto !important;
-                padding: 8px 0 !important;
-                min-height: auto !important;
-                font-size: 14px;
-                font-weight: 500;
-                color: #0133A0 !important;
+              &:hover:not(:disabled) {
+                color: #002080 !important;
                 background: transparent !important;
-                border: none !important;
                 box-shadow: none !important;
+                text-decoration: underline;
+              }
+                
+              &:disabled {
+                color: #c0c4cc !important;
+                background: transparent !important;
+                cursor: not-allowed;
                 text-decoration: none;
-                cursor: pointer;
+              }
                 
-                &:hover:not(:disabled) {
-                  color: #002080 !important;
-                  background: transparent !important;
-                  box-shadow: none !important;
-                  text-decoration: underline;
-                }
+              &:focus {
+                background: transparent !important;
+                box-shadow: none !important;
+                outline: none;
+              }
                 
-                &:disabled {
-                  color: #C0C4CC !important;
-                  background: transparent !important;
-                  cursor: not-allowed;
-                  text-decoration: none;
-                }
-                
-                &:focus {
-                  background: transparent !important;
-                  box-shadow: none !important;
-                  outline: none;
-                }
-                
-                &:active {
-                  background: transparent !important;
-                  box-shadow: none !important;
-                }
+              &:active {
+                background: transparent !important;
+                box-shadow: none !important;
               }
             }
           }
+        }
         
         // 错误提示样式 (基于Figma设计)
         .error-message {
@@ -219,8 +219,8 @@
           font-size: 16px;
           font-weight: 600;
           border-radius: 8px;
-          background: #0133A0; // 匹配Figma主色调
-          border-color: #0133A0;
+          background: #0133a0; // 匹配Figma主色调
+          border-color: #0133a0;
           
           &:hover {
             background: #002080;

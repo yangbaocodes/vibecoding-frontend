@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: ROUTE_NAMES.HOME,
-    redirect: '/dashboard',
+    redirect: '/converter',
     component: () => import('@/layouts/DefaultLayout.vue'),
     children: [
       {

@@ -4,7 +4,7 @@
 
 // API相关常量
 export const API_CONSTANTS = {
-  BASE_URL: import.meta.env.VITE_APP_BASE_API || 'http://localhost:8080/api',
+  BASE_URL: import.meta.env.VITE_APP_BASE_API || 'https://vibecoding-api.aistudio.ltd/api',
   TIMEOUT: 10000,
   RETRY_COUNT: 3
 } as const
