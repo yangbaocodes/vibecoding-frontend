@@ -88,6 +88,15 @@ export const fileApi = {
    */
   download(fileId: string, filename?: string): Promise<void> {
     return Request.download(`/file/download/${fileId}`, undefined, filename)
+  },
+
+  converter(fileUrl: string): Promise<ApiResponse<{ url: string; filename: string }>> {
+    return Request.post('/resume/generate', {
+      resumeUrl: fileUrl,
+      responseMode: 'blocking'
+    }, {
+      timeout: 3 * 60 * 1000
+    })
   }
 }
 

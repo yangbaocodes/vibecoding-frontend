@@ -32,8 +32,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/Converter.vue'),
         meta: {
           title: 'Converter',
-          // todo cf 之后修改成true
-          requiresAuth: false,
+          requiresAuth: true,
           icon: 'Upload'
         }
       },

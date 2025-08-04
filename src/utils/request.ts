@@ -189,7 +189,7 @@ class Request {
   ): Promise<ApiResponse<T>> {
     const formData = file instanceof FormData ? file : new FormData()
     if (file instanceof File) {
-      formData.append('file', file)
+      formData.append('files', file)
     }
 
     return service.post(url, formData, {

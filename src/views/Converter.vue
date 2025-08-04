@@ -48,6 +48,7 @@ import ConverterUploadZone from '@/components/converter/ConverterUploadZone.vue'
 import FileListDisplay from '@/components/converter/FileListDisplay.vue'
 import type { FileItem } from '@/utils/converterUtils'
 import { FileStatus, OperationType } from '@/utils/converterUtils'
+import { fileApi } from '@/api'
 
 // const { t } = useI18n()
 
@@ -67,7 +68,11 @@ const isConvertButtonEnabled = computed(() => {
   // 检查选中的文件中是否有可以转换的文件（非Converting和Converted状态）
   const selectedFileItems = selectedFiles.value.map(index => uploadedFiles.value[index])
   const hasConvertibleFiles = selectedFileItems.some(
-    file => file && file.status !== FileStatus.CONVERTING && file.status !== FileStatus.CONVERTED
+    file =>
+      file &&
+      file.status !== FileStatus.CONVERTING &&
+      file.status !== FileStatus.CONVERTED &&
+      file.status !== FileStatus.SIZE_LIMIT_EXCEEDED
   )
 
   return hasConvertibleFiles
@@ -89,6 +94,12 @@ const handleFilesSelected = (files: File[]) => {
       status: FileStatus.PENDING
     })
   )
+
+  newFiles.forEach(file => {
+    if (file.size >= maxFileSize.value) {
+      file.status = FileStatus.SIZE_LIMIT_EXCEEDED
+    }
+  })
 
   // 检查重复文件
   const existingFileNames = uploadedFiles.value.map(f => f.name)
@@ -152,11 +163,95 @@ const handleSelectedSingle = (index: number, file: FileItem, operation: Operatio
 }
 
 const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
-  console.log('Convert selected files:', files)
+  console.log('mmmmmmmmmmm:Convert selected files:', files[0].file)
+  // 调用api
+  files.forEach(file => {
+    if (
+      file.status === FileStatus.CONVERTING ||
+      file.status === FileStatus.CONVERTED ||
+      file.status === FileStatus.SIZE_LIMIT_EXCEEDED
+    ) {
+      return
+    }
+
+    file.status = FileStatus.CONVERTING
+    fileApi
+      .upload(file.file)
+      .then(res => {
+        console.log('mmmmmmmmm:Upload file:', res)
+        if (res.code === 200) {
+          file.httpId = res.data[0].filename
+          file.fileUrl = res.data[0].fileUrl
+
+          fileApi
+            .converter(res.data[0].fileUrl)
+            .then(res => {
+              console.log('mmmmmmmmm:Converter file:', res)
+              if (res.code === 200) {
+                file.converterUrl = res.data
+                file.status = FileStatus.CONVERTED
+
+                console.log('mmmmmmmmm:Converter file:', file)
+              } else {
+                file.status = FileStatus.FAILED
+              }
+            })
+            .catch(err => {
+              console.log(err)
+              file.status = FileStatus.FAILED
+            })
+        } else {
+          file.status = FileStatus.FAILED
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        file.status = FileStatus.FAILED
+      })
+  })
 }
 
 const handleBatchDownloadFiles = (_indices: number[], files: FileItem[]) => {
   console.log('Batch download files:', files)
+  
+  // 为了避免浏览器阻止同时下载多个文件，添加延迟
+  files.forEach((file, index) => {
+    setTimeout(() => {
+      downloadFile(file)
+    }, index * 3000) // 每个文件之间延迟3000ms
+  })
+}
+
+// 下载文件的工具函数
+const downloadFile = (file: FileItem) => {
+  // 检查文件是否有转换后的URL
+  if (!file.converterUrl) {
+    ElMessage.warning(`文件 ${file.name} 没有可下载的转换结果`)
+    return
+  }
+
+  try {
+    // 创建隐藏的下载链接
+    const link = document.createElement('a')
+    link.href = file.converterUrl
+    link.download = getDownloadFileName(file)
+    link.style.display = 'none'
+
+    // 添加到DOM，触发下载，然后移除
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    console.log('开始下载文件:', file.name)
+  } catch (error) {
+    console.error('下载文件失败:', error)
+    ElMessage.error(`下载文件 ${file.name} 失败`)
+  }
+}
+
+const getDownloadFileName = (file: FileItem): string => {
+  const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'))
+  return `${nameWithoutExt}.docx`
 }
 
 const handleDeleteSelectedFiles = (indices: number[], _files: FileItem[]) => {

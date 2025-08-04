@@ -114,7 +114,7 @@ const handleLogin = async () => {
     ElMessage.success(t('auth.loginSuccess'))
 
     // 直接跳转到dashboard
-    router.replace('/dashboard')
+    router.replace('/converter')
   } catch (error: any) {
     console.error('Login failed:', error)
 

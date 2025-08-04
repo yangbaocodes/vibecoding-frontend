@@ -20,4 +20,6 @@ export interface FileItem {
   path?: string
   status: FileStatus
   httpId?: String
+  fileUrl?: string
+  converterUrl?: string
 }

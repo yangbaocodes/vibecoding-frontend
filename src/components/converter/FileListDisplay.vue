@@ -57,7 +57,6 @@
             <div class="action-buttons">
               <!-- Download按钮 -->
               <ElButton
-                v-if="file.status !== FileStatus.PENDING"
                 link
                 size="small"
                 :disabled="file.status !== FileStatus.CONVERTED"
@@ -461,10 +460,10 @@ const handleDownloadFile = (index: number) => {
         transition: all 0.2s ease;
 
         &.download-button--success {
-          color: #67c23a;
+          color: #409eff;
 
           &:hover:not(:disabled) {
-            color: #5caa2d;
+            color: #409eff;
           }
         }
 
