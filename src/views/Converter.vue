@@ -2,7 +2,7 @@
   <div class="converter-page">
     <div class="page-header">
       <div>
-        <p class="page-header__description">{{ $t('converter.description') }}</p>
+        <p class="page-header__description">Upload your resume, and we will convert it to match the Cognizant resume template.</p>
       </div>
     </div>
 
@@ -214,7 +214,6 @@ const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
 
 const handleBatchDownloadFiles = (_indices: number[], files: FileItem[]) => {
   console.log('Batch download files:', files)
-  
   // 为了避免浏览器阻止同时下载多个文件，添加延迟
   files.forEach((file, index) => {
     setTimeout(() => {
@@ -283,19 +282,11 @@ const getFileTypeDisplay = (fileName: string): string => {
 }
 
 .page-header {
-  margin-bottom: 2rem;
-
-  &__title {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #111827;
-  }
-
   &__description {
-    margin: 0;
+    margin-top: 4rem;
     font-size: 1rem;
-    color: #6b7280;
+    color: #303133;
+    font-weight: 500;
   }
 }
 
@@ -367,16 +358,6 @@ const getFileTypeDisplay = (fileName: string): string => {
 @media (max-width: 768px) {
   .converter-page {
     padding: 1rem;
-  }
-
-  .page-header {
-    &__title {
-      font-size: 1.5rem;
-    }
-
-    &__description {
-      font-size: 0.875rem;
-    }
   }
 
   .info-card {

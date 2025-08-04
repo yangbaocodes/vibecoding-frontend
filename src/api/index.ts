@@ -79,7 +79,7 @@ export const fileApi = {
   /**
    * 上传文件
    */
-  upload(file: File): Promise<ApiResponse<{ url: string; filename: string }>> {
+  upload(file: File): Promise<ApiResponse<any>> {
     return Request.upload('/file/upload', file)
   },
 
@@ -90,7 +90,7 @@ export const fileApi = {
     return Request.download(`/file/download/${fileId}`, undefined, filename)
   },
 
-  converter(fileUrl: string): Promise<ApiResponse<{ url: string; filename: string }>> {
+  converter(fileUrl: string): Promise<ApiResponse<any>> {
     return Request.post('/resume/generate', {
       resumeUrl: fileUrl,
       responseMode: 'blocking'

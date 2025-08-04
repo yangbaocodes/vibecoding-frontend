@@ -4,7 +4,7 @@
     <header class="layout__header">
       <div class="header-left">
         <!-- <ElButton :icon="sidebarCollapsed ? 'Expand' : 'Fold'" link @click="toggleSidebar" /> -->
-        <h1 class="header-title">{{ $t('app.title') }}</h1>
+        <h1 class="header-title">Cognizant Resume Format</h1>
       </div>
       <div class="header-right">
         <!-- <LanguageSelector /> -->
@@ -37,13 +37,13 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app'
 //import SidebarMenu from '@/components/layout/SidebarMenu.vue'
-import LanguageSelector from '@/components/layout/LanguageSelector.vue'
-import ThemeToggle from '@/components/layout/ThemeToggle.vue'
+//import LanguageSelector from '@/components/layout/LanguageSelector.vue'
+//import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 import UserMenu from '@/components/layout/UserMenu.vue'
 
 const appStore = useAppStore()
 
-const { sidebarCollapsed, isMobile, toggleSidebar, setSidebarCollapsed } = appStore
+const { sidebarCollapsed, isMobile, setSidebarCollapsed } = appStore
 </script>
 
 <style lang="scss" scoped>
