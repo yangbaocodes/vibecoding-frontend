@@ -1,9 +1,7 @@
 <template>
   <div class="converter-page">
-    <div class="page-header">
-      <div>
-        <p class="page-header__description">Upload your resume, and we will convert it to match the Cognizant resume template.</p>
-      </div>
+    <div>
+      <p class="page-header__description">Upload your resume, and we will convert it to match the Cognizant resume template.</p>
     </div>
 
     <div class="converter-content">
@@ -278,12 +276,12 @@ const getFileTypeDisplay = (fileName: string): string => {
 <style lang="scss" scoped>
 .converter-page {
   padding: 1.5rem;
-  margin: 0 auto;
 }
 
 .page-header {
   &__description {
     margin-top: 4rem;
+    margin-bottom: 2rem;
     font-size: 1rem;
     color: #303133;
     font-weight: 500;
