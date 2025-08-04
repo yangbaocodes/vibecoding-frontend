@@ -99,7 +99,7 @@ export function useAuthLogic() {
 
         // 跳转到仪表板
         console.log('Attempting to navigate to dashboard...')
-        await router.push('/dashboard')
+        await router.push('/converter')
         console.log('Navigation completed')
       } else {
         console.error('No response data received')
