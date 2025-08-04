@@ -112,6 +112,7 @@ frontend/
 - **状态管理**: Pinia 模块化状态管理
 - **请求拦截**: 统一的 HTTP 请求处理
 - **文档转换器**: 支持 DOCX 和 PDF 文件上传，支持点击和拖拽上传，文件类型验证和大小限制
+- **默认页面**: 登录后默认显示文档转换页面
 
 ## 🛠️ 开发指南
 
@@ -208,6 +209,13 @@ npm run type-check
 创建相应的环境变量文件：
 - `.env.development` - 开发环境
 - `.env.production` - 生产环境
+- `.env.local` - 本地环境（已创建，API地址为 https://vibecoding-api.aistudio.ltd/api）
+
+### API 配置
+项目已配置API基础地址为 `https://vibecoding-api.aistudio.ltd/api`，可通过以下方式修改：
+1. 修改 `.env.local` 文件中的 `VITE_APP_BASE_API` 变量（推荐）
+2. 或修改 `src/constants/index.ts` 中的默认值
+3. 开发环境代理配置在 `vite.config.ts` 中，会自动读取环境变量 `VITE_APP_BASE_API`
 
 ## 🤝 贡献
 

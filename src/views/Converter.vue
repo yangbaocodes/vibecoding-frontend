@@ -43,13 +43,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { ElMessage, ElButton } from 'element-plus'
-import { useI18n } from 'vue-i18n'
+// import { useI18n } from 'vue-i18n'
 import ConverterUploadZone from '@/components/converter/ConverterUploadZone.vue'
 import FileListDisplay from '@/components/converter/FileListDisplay.vue'
 import type { FileItem } from '@/utils/converterUtils'
 import { FileStatus, OperationType } from '@/utils/converterUtils'
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 // 响应式数据
 const uploadedFiles = ref<FileItem[]>([])
@@ -151,11 +151,11 @@ const handleSelectedSingle = (index: number, file: FileItem, operation: Operatio
   }
 }
 
-const handleConvertSelectedFiles = (indices: number[], files: FileItem[]) => {
+const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
   console.log('Convert selected files:', files)
 }
 
-const handleBatchDownloadFiles = (indices: number[], files: FileItem[]) => {
+const handleBatchDownloadFiles = (_indices: number[], files: FileItem[]) => {
   console.log('Batch download files:', files)
 }
 
