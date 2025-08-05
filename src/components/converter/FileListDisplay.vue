@@ -463,10 +463,10 @@ const handleDownloadFile = (index: number) => {
 
         &.status--converting {
           .status-text {
-            color: #a8abb2;
+            color: #67c23a;
           }
           .status-icon {
-            color: #a8abb2;
+            color: #67c23a;
           }
         }
 
