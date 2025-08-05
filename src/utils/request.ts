@@ -221,10 +221,19 @@ class Request {
         const blob = new Blob([response.data])
         const downloadUrl = window.URL.createObjectURL(blob)
 
-        let filename = 'new_resume.zip'
+        // 添加日期后缀
+        const now = new Date()
+        const dateStr =
+            now.getFullYear() +
+            '-' +
+            String(now.getMonth() + 1).padStart(2, '0') +
+            '-' +
+            String(now.getDate()).padStart(2, '0')
+
+        let filename = `new_resume_${dateStr}.zip`
 
         if (isSingle) {
-          filename = 'new_resume.docx'
+          filename = `new_resume_${dateStr}.docx`
         }
 
         // 尝试从响应头获取文件名
