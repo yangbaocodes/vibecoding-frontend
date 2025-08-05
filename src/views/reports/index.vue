@@ -1,21 +1,9 @@
 <template>
   <div class="reports-page">
-    <!-- 年份选择器 -->
-    <div class="year-selector">
-      <div
-        class="year-button"
-        :class="{ active: selectedYear === 2024 }"
-        @click="selectedYear = 2024"
-      >
-        2024
-      </div>
-      <div
-        class="year-button"
-        :class="{ active: selectedYear === 2025 }"
-        @click="selectedYear = 2025"
-      >
-        2025
-      </div>
+    <!-- 顶部工具栏 -->
+    <div class="top-toolbar">
+      <button class="back-button" @click="goBack">← 返回</button>
+      <div class="year-display">2025</div>
     </div>
 
     <!-- 主要内容区域 -->
@@ -68,9 +56,18 @@
 
 <script setup lang="ts">
 import { useReportsLogic } from './index'
+import { useRouter } from 'vue-router'
+
+// 路由
+const router = useRouter()
+
+// 返回上一页
+const goBack = () => {
+  router.back()
+}
 
 // 使用逻辑组合函数
-const { selectedYear, months, days, dataGrid, bottomStats, getColorClass } = useReportsLogic()
+const { months, days, dataGrid, bottomStats, getColorClass } = useReportsLogic()
 </script>
 
 <style lang="scss" scoped>
