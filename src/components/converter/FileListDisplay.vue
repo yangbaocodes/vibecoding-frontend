@@ -49,9 +49,16 @@
             <span class="file-name">{{ file.name }}</span>
           </div>
           <div class="table-cell table-cell__status">
-            <span class="status-text" :class="getStatusClass(file)">
-              {{ getStatusText(file) }}
-            </span>
+            <div class="status-container" :class="getStatusClass(file)">
+              <span class="status-text">
+                {{ getStatusText(file) }}
+              </span>
+              <component
+                :is="getStatusIcon(file)"
+                class="status-icon"
+                :class="{ rotating: file.status === FileStatus.CONVERTING }"
+              />
+            </div>
           </div>
           <div class="table-cell table-cell__action">
             <div class="action-buttons">
@@ -139,6 +146,7 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, type PropType } from 'vue'
 import { ElButton, ElCheckbox, ElMessage, ElPopover, ElDialog } from 'element-plus'
+import { Refresh, CircleCheck, CircleClose } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import { FileItem, FileStatus, OperationType } from '@/utils/converterUtils'
 
@@ -295,6 +303,23 @@ const getStatusClass = (file: FileItem): string => {
   }
 }
 
+const getStatusIcon = (file: FileItem) => {
+  switch (file.status) {
+    case FileStatus.PENDING:
+      return null
+    case FileStatus.CONVERTING:
+      return Refresh
+    case FileStatus.CONVERTED:
+      return CircleCheck
+    case FileStatus.FAILED:
+      return CircleClose
+    case FileStatus.SIZE_LIMIT_EXCEEDED:
+      return null
+    default:
+      return null
+  }
+}
+
 // 下载按钮样式
 const getDownloadButtonClass = (file: FileItem): string => {
   if (file.status === FileStatus.CONVERTED) {
@@ -410,32 +435,69 @@ const handleDownloadFile = (index: number) => {
     &__status {
       justify-content: center;
 
-      .status-text {
-        font-size: 0.8rem;
-        font-weight: 500;
+      .status-container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .status-text {
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+
+        .status-icon {
+          width: 16px;
+          height: 16px;
+          flex-shrink: 0;
+
+          &.rotating {
+            animation: spin 1s linear infinite;
+          }
+        }
 
         &.status--pending {
-          color: #606266;
+          .status-text {
+            color: #606266;
+          }
         }
 
         &.status--converting {
-          color: #a8abb2;
+          .status-text {
+            color: #a8abb2;
+          }
+          .status-icon {
+            color: #a8abb2;
+          }
         }
 
         &.status--completed {
-          color: #67c23a;
+          .status-text {
+            color: #67c23a;
+          }
+          .status-icon {
+            color: #67c23a;
+          }
         }
 
         &.status--failed {
-          color: #f56c6c;
+          .status-text {
+            color: #f56c6c;
+          }
+          .status-icon {
+            color: #f56c6c;
+          }
         }
 
         &.status--size-limit-exceeded {
-          color: #f56c6c;
+          .status-text {
+            color: #f56c6c;
+          }
         }
 
         &.status--unknown {
-          color: #606266;
+          .status-text {
+            color: #606266;
+          }
         }
       }
     }
@@ -513,8 +575,13 @@ const handleDownloadFile = (index: number) => {
     font-size: 0.8rem;
   }
 
-  .table-cell__status .status-text {
-    font-size: 0.75rem;
+  .table-cell__status .status-container {
+    .status-text {
+      font-size: 0.75rem;
+    }
+    .status-icon {
+      font-size: 0.8rem;
+    }
   }
 
   .action-buttons {
@@ -669,6 +736,16 @@ const handleDownloadFile = (index: number) => {
       background: #1a3d73;
       border-color: #1a3d73;
     }
+  }
+}
+
+// 旋转动画
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }
 
