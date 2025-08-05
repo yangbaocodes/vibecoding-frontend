@@ -61,13 +61,14 @@ const convertApiDataToGrid = (data: YearlyReportData): any[] => {
       const dayData = dataMap.get(dateStr)
 
       if (dayData) {
-        const totalCalls = dayData.totalCallCount || 0
+        const successCalls = dayData.successCount || 0
         rowData.push({
-          hasData: totalCalls > 0,
-          value: totalCalls,
+          hasData: successCalls > 0,
+          value: successCalls,
           date: dateStr,
           failCount: dayData.failCount || 0,
           successCount: dayData.successCount || 0,
+          totalCallCount: dayData.totalCallCount || 0,
           avgResponseTime: dayData.avgResponseTime || 0
         })
       } else {
