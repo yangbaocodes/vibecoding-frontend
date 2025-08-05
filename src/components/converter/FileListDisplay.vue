@@ -38,8 +38,13 @@
       </div>
 
       <div class="table-body">
-        <div v-for="(file, index) in files" :key="index" class="table-row">
-          <div class="table-cell table-cell__checkbox">
+        <div
+          v-for="(file, index) in files"
+          :key="index"
+          class="table-row"
+          @click="handleRowClick(index)"
+        >
+          <div class="table-cell table-cell__checkbox" @click.stop>
             <ElCheckbox
               :model-value="props.selectedFiles.includes(index)"
               @change="val => handleFileSelect(index, !!val)"
@@ -60,7 +65,7 @@
               />
             </div>
           </div>
-          <div class="table-cell table-cell__action">
+          <div class="table-cell table-cell__action" @click.stop>
             <div class="action-buttons">
               <!-- Download按钮 -->
               <ElButton
@@ -246,6 +251,11 @@ const handleFileSelect = (index: number, checked: boolean) => {
   emit('selected-multiple', newSelectedFiles, selectedFileItems, OperationType.NONE)
 }
 
+const handleRowClick = (index: number) => {
+  const isSelected = props.selectedFiles.includes(index)
+  handleFileSelect(index, !isSelected)
+}
+
 const handleSelectAll = (checked: boolean) => {
   const newSelectedFiles = checked ? props.files.map((_, index) => index) : []
   emit('update:selectedFiles', newSelectedFiles)
@@ -405,6 +415,7 @@ const handleDownloadFile = (index: number) => {
     padding: 0.1rem 1.5rem;
     border-bottom: 1px solid #f3f4f6;
     transition: background-color 0.15s ease;
+    cursor: pointer;
 
     &:hover {
       background: #f9fafb;
