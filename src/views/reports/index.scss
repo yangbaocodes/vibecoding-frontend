@@ -2,6 +2,8 @@
 .reports-page {
   // width: calc(100vw - 260px); // 减去侧边栏宽度
   height: calc(100vh - 60px); // 减去导航栏高度
+  min-width: 1200px; // 增加最小宽度
+  min-height: 800px; // 增加最小高度
   background-color: #ffffff;
   font-family: 'Inter', sans-serif;
   padding: 12px;
@@ -9,7 +11,6 @@
   display: flex;
   flex-direction: column;
   overflow: auto; // 允许滚动
-  min-width: 800px; // 设置最小宽度，确保内容完整显示
   
   // 顶部工具栏
   .top-toolbar {
@@ -256,6 +257,12 @@
     margin-left: 85px; // 向右调整，与数据区域左边距对齐
     align-items: center;
     justify-content: flex-start;
+    
+    .legend-text {
+      font-size: 12px;
+      color: #656d76;
+      margin: 0 4px;
+    }
     
     .stat-box {
       width: 44px; // 固定宽度，基于Figma设计

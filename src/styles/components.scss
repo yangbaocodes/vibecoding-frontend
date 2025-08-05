@@ -20,10 +20,7 @@
     @include flex(row, space-between, center);
 
     padding: 0 $spacing-lg;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: $z-index-fixed;
 
     @include transition(all);

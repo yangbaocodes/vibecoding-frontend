@@ -38,6 +38,22 @@ export interface LoginResponse {
   isNewUser: boolean
 }
 
+// 报表数据类型
+export interface DailyCallData {
+  callDate: string
+  totalCallCount: number
+  successCount: number
+  failCount: number
+  avgResponseTime: number
+}
+
+export interface YearlyReportData {
+  dailyCallCount: DailyCallData[]
+  totalCalls: number
+  successRate: number
+  avgResponseTime: number
+}
+
 // 路由元信息类型
 export interface RouteMeta {
   title?: string

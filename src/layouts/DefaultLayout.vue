@@ -47,10 +47,6 @@ const { sidebarCollapsed, isMobile, setSidebarCollapsed } = appStore
 </script>
 
 <style lang="scss" scoped>
-.layout__header {
-  position: relative;
-}
-
 .header-left {
   @include flex(row, flex-start, center);
   gap: $spacing-md;

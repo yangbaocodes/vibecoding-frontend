@@ -17,7 +17,7 @@
           <div class="login-form-container">
             <!-- 登录标题 - 左对齐 -->
             <div class="login-header">
-              <h1 class="login-title">Login</h1>
+              <h1 class="login-title">{{ $t('auth.login') }}</h1>
             </div>
 
             <!-- 登录表单 -->
@@ -31,10 +31,10 @@
             >
               <!-- 邮箱输入框 -->
               <el-form-item prop="email" class="form-item">
-                <div class="input-label">Email :</div>
+                <div class="input-label">{{ $t('auth.email') }} :</div>
                 <el-input
                   v-model="loginForm.email"
-                  placeholder="Enter"
+                  :placeholder="$t('auth.emailPlaceholder')"
                   size="large"
                   class="form-input"
                 />
@@ -42,11 +42,11 @@
 
               <!-- 验证码输入框 -->
               <el-form-item prop="verificationCode" class="form-item">
-                <div class="input-label">Verification Code :</div>
+                <div class="input-label">{{ $t('auth.verificationCode') }} :</div>
                 <div class="verification-input-container">
                   <el-input
                     v-model="loginForm.verificationCode"
-                    placeholder="Enter"
+                    :placeholder="$t('auth.verificationCodePlaceholder')"
                     size="large"
                     class="form-input verification-input"
                   >
@@ -82,8 +82,8 @@
                   class="login-button"
                   @click="handleLogin"
                 >
-                  <span v-if="!loading">Login</span>
-                  <span v-else>Logging in...</span>
+                  <span v-if="!loading">{{ $t('auth.login') }}</span>
+                  <span v-else>{{ $t('auth.loggingIn') }}</span>
                 </el-button>
               </el-form-item>
             </el-form>

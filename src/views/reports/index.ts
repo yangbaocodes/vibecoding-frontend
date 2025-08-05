@@ -1,8 +1,13 @@
 // Reports 页面逻辑 - 基于真实 Figma 设计
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { userApi } from '@/api'
+import type { YearlyReportData } from '@/types'
 
 // 响应式数据
 const selectedYear = ref<number>(2025) // 默认选择 2025
+const loading = ref(false)
+const apiData = ref<YearlyReportData | null>(null)
 
 // 月份标签
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -10,8 +15,98 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 // 天数标签 (1-31)
 const days = Array.from({ length: 31 }, (_, i) => i + 1)
 
-// 数据网格 - 模拟 Figma 中的数据框
-const generateDataGrid = (_year: number) => {
+// 从API获取报表数据
+const fetchReportsData = async (year: number) => {
+  try {
+    loading.value = true
+    const response = await userApi.getYearlyDailyCalls(year)
+
+    if (response.data) {
+      apiData.value = response.data
+      return response.data
+    }
+  } catch (error) {
+    console.error('获取报表数据失败:', error)
+    ElMessage.error('获取报表数据失败，请稍后重试')
+    return null
+  } finally {
+    loading.value = false
+  }
+}
+
+// 将API数据转换为表格数据格式
+const convertApiDataToGrid = (data: YearlyReportData): any[] => {
+  if (!data || !data.dailyCallCount || !Array.isArray(data.dailyCallCount)) {
+    console.warn('API数据格式不正确，使用模拟数据')
+    return generateMockDataGrid()
+  }
+
+  const grid = []
+  const dailyCallCount = data.dailyCallCount
+
+  // 创建日期到数据的映射
+  const dataMap = new Map()
+  dailyCallCount.forEach((item: any) => {
+    if (item.callDate) {
+      dataMap.set(item.callDate, item)
+    }
+  })
+
+  // 生成12个月 x 31天的网格
+  for (let month = 0; month < 12; month++) {
+    const rowData = []
+    for (let day = 1; day <= 31; day++) {
+      // 构造日期字符串 (格式: YYYY-MM-DD)
+      const dateStr = `${selectedYear.value}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+      const dayData = dataMap.get(dateStr)
+
+      if (dayData) {
+        const totalCalls = dayData.totalCallCount || 0
+        rowData.push({
+          hasData: totalCalls > 0,
+          value: totalCalls,
+          date: dateStr,
+          failCount: dayData.failCount || 0,
+          successCount: dayData.successCount || 0,
+          avgResponseTime: dayData.avgResponseTime || 0
+        })
+      } else {
+        // 检查这个日期是否是有效日期
+        const testDate = new Date(selectedYear.value, month, day)
+        const isValidDate = testDate.getMonth() === month && testDate.getDate() === day
+
+        rowData.push({
+          hasData: false,
+          value: 0,
+          date: isValidDate ? dateStr : '',
+          failCount: 0,
+          successCount: 0,
+          avgResponseTime: 0
+        })
+      }
+    }
+    grid.push(rowData)
+  }
+
+  return grid
+}
+
+// 数据网格 - 统一的数据获取函数
+const generateDataGrid = async (year: number): Promise<any[]> => {
+  // 先尝试获取API数据
+  const apiResponse = await fetchReportsData(year)
+
+  if (apiResponse) {
+    // 如果API数据获取成功，转换为网格格式
+    return convertApiDataToGrid(apiResponse)
+  } else {
+    // API失败时使用模拟数据
+    return generateMockDataGrid()
+  }
+}
+
+// 生成模拟数据 - 备用函数
+const generateMockDataGrid = (): any[] => {
   const grid = []
   const cols = 31 // 31天
   const rows = 12 // 12个月
@@ -51,14 +146,20 @@ const bottomStats = [
   { color: 'rgba(1, 51, 160, 1.0)', text: '>50', range: '>50' }
 ]
 
-// 为不同年份生成固定的数据集
-const data2024 = generateDataGrid(2024) // 2024年的固定数据
-const data2025 = generateDataGrid(2025) // 2025年的固定数据
+// 为不同年份生成固定的数据集 - 初始化时使用空数组，组件加载时异步获取
+const dataGrid = ref<any[]>([])
 
-// 根据选中年份返回对应数据
-const dataGrid = computed(() => {
-  return selectedYear.value === 2024 ? data2024 : data2025
-})
+// 初始化数据
+const initData = async () => {
+  try {
+    const gridData = await generateDataGrid(selectedYear.value)
+    dataGrid.value = gridData
+  } catch (error) {
+    console.error('初始化数据失败:', error)
+    // 失败时使用模拟数据
+    dataGrid.value = generateMockDataGrid()
+  }
+}
 
 // 导出逻辑钩子
 export function useReportsLogic() {
@@ -68,6 +169,8 @@ export function useReportsLogic() {
     days,
     dataGrid,
     bottomStats,
-    getColorClass
+    getColorClass,
+    loading,
+    initData
   }
 }

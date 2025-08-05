@@ -61,7 +61,19 @@
     "passwordRequired": "Password is required",
     "passwordTooShort": "Password must be at least 6 characters",
     "emailInvalid": "Please enter a valid email address",
-    "confirmPasswordMismatch": "Passwords do not match"
+    "confirmPasswordMismatch": "Passwords do not match",
+    "verificationCode": "Verification Code",
+    "verificationCodeRequired": "Verification code is required",
+    "verificationCodeInvalid": "Invalid verification code format",
+    "sendCode": "Send Code",
+    "sendingCode": "Sending...",
+    "resendCode": "Resend",
+    "codeSentSuccess": "Verification code sent successfully",
+    "codeSentFailed": "Failed to send verification code",
+    "loggingIn": "Logging in...",
+    "emailPlaceholder": "Enter your email",
+    "verificationCodePlaceholder": "Enter verification code",
+    "invalidEmailDomain": "Please use @cognizant.com email"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -157,6 +169,30 @@
       "fileTooLarge": "File '{name}' is too large. Maximum size is {size}",
       "invalidType": "File '{name}' has invalid type. Only DOCX and PDF files are supported",
       "uploadLimitExceeded": "Upload limit exceeded. Maximum 10 files allowed."
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "back": "Back",
+    "year": "Year",
+    "statistics": "Statistics",
+    "noData": "No data available",
+    "months": {
+      "Jan": "Jan",
+      "Feb": "Feb",
+      "Mar": "Mar", 
+      "Apr": "Apr",
+      "May": "May",
+      "Jun": "Jun",
+      "Jul": "Jul",
+      "Aug": "Aug",
+      "Sep": "Sep",
+      "Oct": "Oct",
+      "Nov": "Nov",
+      "Dec": "Dec"
+    },
+    "tooltip": {
+      "contributions": "contributions"
     }
   },
   "error": {

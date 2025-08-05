@@ -2,12 +2,16 @@
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import type { FormInstance, FormRules } from 'element-plus'
 import { userApi } from '@/api'
 import { useUserStore } from '@/store/modules/user'
 
 // 导出组合函数
 export function useAuthLogic() {
+  // 国际化
+  const { t } = useI18n()
+
   // 路由实例
   const router = useRouter()
 
@@ -33,24 +37,24 @@ export function useAuthLogic() {
     return !emailPattern.test(loginForm.value.email) || countdown.value > 0 || sendingCode.value
   })
   const sendCodeButtonText = computed(() => {
-    if (sendingCode.value) return 'Sending...'
+    if (sendingCode.value) return t('auth.sendingCode')
     if (countdown.value > 0) return `${countdown.value}s`
-    return 'Send'
+    return t('auth.sendCode')
   })
 
   // 表单验证规则
   const loginRules: FormRules = {
     email: [
-      { required: true, message: 'Please enter your email', trigger: 'blur' },
+      { required: true, message: t('auth.emailRequired'), trigger: 'blur' },
       {
         pattern: /^[^\s@]+@cognizant\.com$/,
-        message: 'Please enter a valid @cognizant.com email address',
+        message: t('auth.invalidEmailDomain'),
         trigger: 'blur'
       }
     ],
     verificationCode: [
-      { required: true, message: 'Please enter verification code', trigger: 'blur' },
-      { min: 4, max: 8, message: 'Verification code length should be 4 to 8', trigger: 'blur' }
+      { required: true, message: t('auth.verificationCodeRequired'), trigger: 'blur' },
+      { min: 4, max: 8, message: t('auth.verificationCodeInvalid'), trigger: 'blur' }
     ]
   }
 
@@ -92,9 +96,9 @@ export function useAuthLogic() {
 
         // 显示成功消息，区分新用户和老用户
         if (isNewUser) {
-          ElMessage.success('Registration successful! Welcome!')
+          ElMessage.success(t('auth.registerSuccess'))
         } else {
-          ElMessage.success('Login successful!')
+          ElMessage.success(t('auth.loginSuccess'))
         }
 
         // 跳转到仪表板
@@ -103,7 +107,7 @@ export function useAuthLogic() {
         console.log('Navigation completed')
       } else {
         console.error('No response data received')
-        errorMessage.value = 'Login failed: No data received from server'
+        errorMessage.value = t('auth.loginFailed')
       }
     } catch (error: any) {
       console.error('Login error:', error)
@@ -114,7 +118,7 @@ export function useAuthLogic() {
       } else if (error.message) {
         errorMessage.value = error.message
       } else {
-        errorMessage.value = 'Login failed. Please check your credentials.'
+        errorMessage.value = t('auth.loginFailed')
       }
     } finally {
       loading.value = false
@@ -126,7 +130,7 @@ export function useAuthLogic() {
     // 验证邮箱格式
     const emailPattern = /^[^\s@]+@cognizant\.com$/
     if (!emailPattern.test(loginForm.value.email)) {
-      ElMessage.error('Please enter a valid @cognizant.com email address')
+      ElMessage.error(t('auth.invalidEmailDomain'))
       return
     }
 
@@ -136,7 +140,7 @@ export function useAuthLogic() {
       // 调用真实的发送验证码API
       await userApi.sendVerificationCode({ email: loginForm.value.email })
 
-      ElMessage.success('Verification code sent successfully!')
+      ElMessage.success(t('auth.codeSentSuccess'))
 
       // 开始倒计时 - 30秒
       countdown.value = 30
@@ -153,7 +157,7 @@ export function useAuthLogic() {
       if (error.response?.data?.message) {
         ElMessage.error(error.response.data.message)
       } else {
-        ElMessage.error('Failed to send verification code. Please try again.')
+        ElMessage.error(t('auth.codeSentFailed'))
       }
     } finally {
       sendingCode.value = false

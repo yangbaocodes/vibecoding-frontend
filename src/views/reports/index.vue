@@ -2,7 +2,7 @@
   <div class="reports-page">
     <!-- 顶部工具栏 -->
     <div class="top-toolbar">
-      <button class="back-button" @click="goBack">← 返回</button>
+      <button class="back-button" @click="goBack">← {{ $t('reports.back') }}</button>
       <div class="year-display">2025</div>
     </div>
 
@@ -22,14 +22,17 @@
       <div class="months-column">
         <div v-for="month in months" :key="month" class="month-row">
           <div class="month-card">
-            <div class="month-text">{{ month }}</div>
+            <div class="month-text">{{ $t(`reports.months.${month}`) }}</div>
           </div>
         </div>
       </div>
 
       <!-- 数据网格 -->
-      <div class="data-grid">
-        <div v-for="(row, rowIndex) in dataGrid" :key="`row-${rowIndex}`" class="data-row">
+      <div class="data-grid" v-loading="loading">
+        <div v-if="!loading && dataGrid.length === 0" class="no-data">
+          {{ $t('reports.noData') }}
+        </div>
+        <div v-else v-for="(row, rowIndex) in dataGrid" :key="`row-${rowIndex}`" class="data-row">
           <div
             v-for="(cell, colIndex) in row"
             :key="`cell-${rowIndex}-${colIndex}`"
@@ -55,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useReportsLogic } from './index'
 import { useRouter } from 'vue-router'
 
@@ -67,7 +71,12 @@ const goBack = () => {
 }
 
 // 使用逻辑组合函数
-const { months, days, dataGrid, bottomStats, getColorClass } = useReportsLogic()
+const { months, days, dataGrid, bottomStats, getColorClass, loading, initData } = useReportsLogic()
+
+// 组件挂载时初始化数据
+onMounted(() => {
+  initData()
+})
 </script>
 
 <style lang="scss" scoped>

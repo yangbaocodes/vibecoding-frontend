@@ -61,7 +61,19 @@
     "passwordRequired": "密码不能为空",
     "passwordTooShort": "密码至少需要6个字符",
     "emailInvalid": "请输入有效的邮箱地址",
-    "confirmPasswordMismatch": "两次输入的密码不一致"
+    "confirmPasswordMismatch": "两次输入的密码不一致",
+    "verificationCode": "验证码",
+    "verificationCodeRequired": "验证码不能为空",
+    "verificationCodeInvalid": "验证码格式无效",
+    "sendCode": "发送验证码",
+    "sendingCode": "发送中...",
+    "resendCode": "重新发送",
+    "codeSentSuccess": "验证码发送成功",
+    "codeSentFailed": "验证码发送失败",
+    "loggingIn": "登录中...",
+    "emailPlaceholder": "请输入邮箱",
+    "verificationCodePlaceholder": "请输入验证码",
+    "invalidEmailDomain": "请使用 @cognizant.com 邮箱"
   },
   "dashboard": {
     "title": "仪表盘",
@@ -158,6 +170,30 @@
       "fileTooLarge": "文件 '{name}' 过大，最大大小为 {size}",
       "invalidType": "文件 '{name}' 类型无效，仅支持 DOCX 和 PDF 文件",
       "uploadLimitExceeded": "上传文件超出限制，最多允许10个文件。"
+    }
+  },
+  "reports": {
+    "title": "报表",
+    "back": "返回",
+    "year": "年份",
+    "statistics": "统计数据",
+    "noData": "暂无数据",
+    "months": {
+      "Jan": "一月",
+      "Feb": "二月", 
+      "Mar": "三月",
+      "Apr": "四月",
+      "May": "五月",
+      "Jun": "六月",
+      "Jul": "七月",
+      "Aug": "八月",
+      "Sep": "九月",
+      "Oct": "十月",
+      "Nov": "十一月",
+      "Dec": "十二月"
+    },
+    "tooltip": {
+      "contributions": "贡献"
     }
   },
   "error": {

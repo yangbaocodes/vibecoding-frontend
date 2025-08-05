@@ -3,7 +3,7 @@
  */
 
 import Request from '@/utils/request'
-import type { ApiResponse, User, LoginResponse } from '@/types'
+import type { ApiResponse, User, LoginResponse, YearlyReportData } from '@/types'
 
 // 用户相关API
 export const userApi = {
@@ -71,6 +71,13 @@ export const userApi = {
     verificationCode: string
   }): Promise<ApiResponse<LoginResponse>> {
     return Request.post('/auth/login-or-register', data)
+  },
+
+  /**
+   * 获取年度每日调用统计
+   */
+  getYearlyDailyCalls(year: number): Promise<ApiResponse<YearlyReportData>> {
+    return Request.get(`/report/yearly-daily-calls?year=${year}`)
   }
 }
 
@@ -91,12 +98,16 @@ export const fileApi = {
   // },
 
   converter(fileUrl: String): Promise<ApiResponse<any>> {
-    return Request.post('/resume/generate', {
-      fileName: fileUrl,
-      responseMode: 'blocking'
-    }, {
-      timeout: 3 * 60 * 1000
-    })
+    return Request.post(
+      '/resume/generate',
+      {
+        fileName: fileUrl,
+        responseMode: 'blocking'
+      },
+      {
+        timeout: 3 * 60 * 1000
+      }
+    )
   }
 }
 
