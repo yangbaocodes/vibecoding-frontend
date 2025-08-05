@@ -86,13 +86,13 @@ export const fileApi = {
   /**
    * 下载文件
    */
-  download(fileId: string, filename?: string): Promise<void> {
+  download(fileId: String, filename?: String): Promise<void> {
     return Request.download(`/file/download/${fileId}`, undefined, filename)
   },
 
-  converter(fileUrl: string): Promise<ApiResponse<any>> {
+  converter(fileUrl: String): Promise<ApiResponse<any>> {
     return Request.post('/resume/generate', {
-      resumeUrl: fileUrl,
+      fileName: fileUrl,
       responseMode: 'blocking'
     }, {
       timeout: 3 * 60 * 1000

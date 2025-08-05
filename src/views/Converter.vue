@@ -142,7 +142,6 @@ const handleFilesSelected = (files: File[]) => {
 }
 
 const handleSelectedMultiple = (indices: number[], files: FileItem[], operation: OperationType) => {
-  console.log('mmmmmmmmmmm:Selected multiple files:', operation, files)
   if (operation === OperationType.DELETE) {
     handleDeleteSelectedFiles(indices, files)
   } else if (operation === OperationType.DOWNLOAD) {
@@ -153,7 +152,6 @@ const handleSelectedMultiple = (indices: number[], files: FileItem[], operation:
 }
 
 const handleSelectedSingle = (index: number, file: FileItem, operation: OperationType) => {
-  console.log('mmmmmmmmmmm:Selected single file:', operation, file)
   if (operation === OperationType.DELETE) {
     handleDeleteSelectedFiles([index], [file])
   } else if (operation === OperationType.DOWNLOAD) {
@@ -162,7 +160,6 @@ const handleSelectedSingle = (index: number, file: FileItem, operation: Operatio
 }
 
 const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
-  console.log('mmmmmmmmmmm:Convert selected files:', files[0].file)
   // 调用api
   files.forEach(file => {
     if (
@@ -177,20 +174,20 @@ const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
     fileApi
       .upload(file.file)
       .then(res => {
-        console.log('mmmmmmmmm:Upload file:', res)
+        console.log('Upload file:', res)
         if (res.code === 200) {
           file.httpId = res.data[0].filename
           file.fileUrl = res.data[0].fileUrl
 
           fileApi
-            .converter(res.data[0].fileUrl)
+            .converter(file.httpId ?? '')
             .then(res => {
-              console.log('mmmmmmmmm:Converter file:', res)
+              console.log('Converter file:', res)
               if (res.code === 200) {
                 file.converterUrl = res.data
                 file.status = FileStatus.CONVERTED
 
-                console.log('mmmmmmmmm:Converter file:', file)
+                console.log('Converter file:', file)
               } else {
                 file.status = FileStatus.FAILED
               }
