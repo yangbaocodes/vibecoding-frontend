@@ -78,7 +78,7 @@ const isConvertButtonEnabled = computed(() => {
 
 // 转换文件处理方法
 const handleConvertFiles = () => {
-  ElMessage.info('Starting file conversion. Please allow approximately 1 minute for completion.')
+  ElMessage.success('Starting file conversion. Please allow approximately 1 minute for completion.')
   const selectedFileItems = selectedFiles.value.map(index => uploadedFiles.value[index])
   handleSelectedMultiple(selectedFiles.value, selectedFileItems, OperationType.CONVERT)
 }
