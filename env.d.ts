@@ -40,6 +40,8 @@ declare module '@element-plus/icons-vue' {
   export const Operation: DefineComponent<{}, {}, any>
   export const Lock: DefineComponent<{}, {}, any>
   export const Refresh: DefineComponent<{}, {}, any>
+  export const CircleCheck: DefineComponent<{}, {}, any>
+  export const CircleClose: DefineComponent<{}, {}, any>
   export const QuestionFilled: DefineComponent<{}, {}, any>
   export const Upload: DefineComponent<{}, {}, any>
   export const UploadFilled: DefineComponent<{}, {}, any>
