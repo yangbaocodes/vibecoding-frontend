@@ -206,7 +206,7 @@ class Request {
   /**
    * 文件下载
    */
-  static download(url: string, params?: Record<string, any>): Promise<void> {
+  static download(url: string, params?: Record<string, any>, isSingle: boolean = false): Promise<void> {
     return service
       .post(
         url,
@@ -221,30 +221,34 @@ class Request {
         const blob = new Blob([response.data])
         const downloadUrl = window.URL.createObjectURL(blob)
 
+        let filename = 'new_resume.zip'
+
+        if (isSingle) {
+          filename = 'new_resume.docx'
+        }
+
         // 尝试从响应头获取文件名
         // 由于CORS限制，可能无法访问Content-Disposition头
         const contentDisposition =
           response.headers['content-disposition'] ||
           response.headers['Content-Disposition'] ||
           response.headers['CONTENT-DISPOSITION']
-        let filename = 'new_resume.zip'
-        console.log('mmmmmmmmmm:contentDisposition', response.headers)
-
         if (contentDisposition) {
           const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)
           if (filenameMatch && filenameMatch[1]) {
             filename = filenameMatch[1].replace(/['"]/g, '')
           }
-        } else {
-          // 如果无法获取文件名，使用默认名称或从URL参数中获取
-          // if (params?.fileNameList && params.fileNameList.length === 1) {
-          //   filename = params.fileNameList[0]
-          // } else if (params?.fileNameList && params.fileNameList.length > 1) {
-          //   filename = 'download.zip'
-          // }
-
-          filename = 'new_resume.zip'
         }
+        // else {
+        //   // 如果无法获取文件名，使用默认名称或从URL参数中获取
+        //   // if (params?.fileNameList && params.fileNameList.length === 1) {
+        //   //   filename = params.fileNameList[0]
+        //   // } else if (params?.fileNameList && params.fileNameList.length > 1) {
+        //   //   filename = 'download.zip'
+        //   // }
+
+        //   filename = 'new_resume.zip'
+        // }
 
         const link = document.createElement('a')
         link.href = downloadUrl
