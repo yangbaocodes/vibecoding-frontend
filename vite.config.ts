@@ -15,7 +15,7 @@ const getApiBaseUrl = (env: Record<string, string>) => {
     }
     return envApiUrl.replace('/api', '')
   }
-  return 'https://vibecoding-api.aistudio.ltd'
+  return 'https://api.vibecoding.aistudio.ltd'
 }
 
 // https://vitejs.dev/config/

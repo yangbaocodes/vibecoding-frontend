@@ -210,44 +210,49 @@ const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
 const handleBatchDownloadFiles = (_indices: number[], files: FileItem[]) => {
   console.log('Batch download files:', files)
   // 为了避免浏览器阻止同时下载多个文件，添加延迟
-  files.forEach((file, index) => {
-    setTimeout(() => {
-      downloadFile(file)
-    }, index * 3000) // 每个文件之间延迟3000ms
-  })
+  // files.forEach((file, index) => {
+  //   setTimeout(() => {
+  //     downloadFile(file)
+  //   }, index * 3000) // 每个文件之间延迟3000ms
+  // })
+  const fileNames = files
+    .filter(file => file.status === FileStatus.CONVERTED)
+    .map(file => file.httpId ?? '')
+
+  fileApi.download(fileNames ?? [])
 }
 
 // 下载文件的工具函数
-const downloadFile = (file: FileItem) => {
-  // 检查文件是否有转换后的URL
-  if (!file.converterUrl) {
-    ElMessage.warning(`文件 ${file.name} 没有可下载的转换结果`)
-    return
-  }
+// const downloadFile = (file: FileItem) => {
+//   // 检查文件是否有转换后的URL
+//   if (!file.converterUrl) {
+//     ElMessage.warning(`文件 ${file.name} 没有可下载的转换结果`)
+//     return
+//   }
 
-  try {
-    // 创建隐藏的下载链接
-    const link = document.createElement('a')
-    link.href = file.converterUrl
-    link.download = getDownloadFileName(file)
-    link.style.display = 'none'
+//   try {
+//     // 创建隐藏的下载链接
+//     const link = document.createElement('a')
+//     link.href = file.converterUrl
+//     link.download = getDownloadFileName(file)
+//     link.style.display = 'none'
 
-    // 添加到DOM，触发下载，然后移除
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+//     // 添加到DOM，触发下载，然后移除
+//     document.body.appendChild(link)
+//     link.click()
+//     document.body.removeChild(link)
 
-    console.log('开始下载文件:', file.name)
-  } catch (error) {
-    console.error('下载文件失败:', error)
-    ElMessage.error(`下载文件 ${file.name} 失败`)
-  }
-}
+//     console.log('开始下载文件:', file.name)
+//   } catch (error) {
+//     console.error('下载文件失败:', error)
+//     ElMessage.error(`下载文件 ${file.name} 失败`)
+//   }
+// }
 
-const getDownloadFileName = (file: FileItem): string => {
-  const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'))
-  return `${nameWithoutExt}.docx`
-}
+// const getDownloadFileName = (file: FileItem): string => {
+//   const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'))
+//   return `${nameWithoutExt}.docx`
+// }
 
 const handleDeleteSelectedFiles = (indices: number[], _files: FileItem[]) => {
   uploadedFiles.value = uploadedFiles.value.filter((_, index) => !indices.includes(index))

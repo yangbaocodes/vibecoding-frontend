@@ -93,9 +93,9 @@ export const fileApi = {
   /**
    * 下载文件
    */
-  // download(fileId: String, filename?: String): Promise<void> {
-  //   return Request.download(`/file/download/${fileId}`, undefined, filename)
-  // },
+  download(fileNameList: String[]): Promise<void> {
+    return Request.download(`/file/files/downloads`, { fileNameList })
+  },
 
   converter(fileUrl: String): Promise<ApiResponse<any>> {
     return Request.post(

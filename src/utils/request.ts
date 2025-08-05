@@ -108,7 +108,10 @@ service.interceptors.response.use(
 )
 
 // 请求重试机制
-const retryRequest = async (
+const retryRequest: (
+  config: AxiosRequestConfig,
+  retryCount?: number
+) => Promise<AxiosResponse> = async (
   config: AxiosRequestConfig,
   retryCount: number = API_CONSTANTS.RETRY_COUNT
 ) => {
@@ -203,18 +206,49 @@ class Request {
   /**
    * 文件下载
    */
-  static download(url: string, params?: Record<string, any>, filename?: string): Promise<void> {
+  static download(url: string, params?: Record<string, any>): Promise<void> {
     return service
-      .get(url, {
-        params,
-        responseType: 'blob'
-      })
+      .post(
+        url,
+        {
+          filenames: params?.fileNameList
+        },
+        {
+          responseType: 'blob'
+        }
+      )
       .then((response: AxiosResponse) => {
         const blob = new Blob([response.data])
         const downloadUrl = window.URL.createObjectURL(blob)
+
+        // 尝试从响应头获取文件名
+        // 由于CORS限制，可能无法访问Content-Disposition头
+        const contentDisposition =
+          response.headers['content-disposition'] ||
+          response.headers['Content-Disposition'] ||
+          response.headers['CONTENT-DISPOSITION']
+        let filename = 'new_resume.zip'
+        console.log('mmmmmmmmmm:contentDisposition', response.headers)
+
+        if (contentDisposition) {
+          const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)
+          if (filenameMatch && filenameMatch[1]) {
+            filename = filenameMatch[1].replace(/['"]/g, '')
+          }
+        } else {
+          // 如果无法获取文件名，使用默认名称或从URL参数中获取
+          // if (params?.fileNameList && params.fileNameList.length === 1) {
+          //   filename = params.fileNameList[0]
+          // } else if (params?.fileNameList && params.fileNameList.length > 1) {
+          //   filename = 'download.zip'
+          // }
+
+          filename = 'new_resume.zip'
+        }
+
         const link = document.createElement('a')
         link.href = downloadUrl
-        link.download = filename || 'download'
+        link.download = filename
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
