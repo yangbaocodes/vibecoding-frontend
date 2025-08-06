@@ -66,7 +66,7 @@
             <div class="convert-options convert-001 convert-002">
               <ElRadioGroup
                 v-model="file.converterType"
-                @change="value => handleFileLanguageChange(index, value)"
+                @change="(value: any) => handleFileLanguageChange(index, value as ConverterType)"
               >
                 <ElRadio :value="ConverterType.EN">English</ElRadio>
                 <ElRadio :value="ConverterType.CN">Chinese</ElRadio>
@@ -179,6 +179,7 @@ const emit = defineEmits<{
   'selected-multiple': [indices: number[], files: FileItem[], operation: OperationType]
   'selected-single': [index: number, file: FileItem, operation: OperationType]
   'update:selectedFiles': [indices: number[]]
+  'update:files': [files: FileItem[]]
 }>()
 
 const props = defineProps({
@@ -366,24 +367,34 @@ const handleDownloadFile = (index: number) => {
 // 下面的代码都是和语言选择相关的方法和计算属性
 // 语言选择相关计算属性
 const languageStatus = computed({
-    get: () => {
-      if (props.files.length > 0 && props.files.every(file => file.converterType === ConverterType.EN)) {
-        return ConverterType.EN
-      } else if (props.files.length > 0 && props.files.every(file => file.converterType === ConverterType.CN)) {
-        return ConverterType.CN
-      } else {
-        return 'null'
-      }
-    },
-    set: (val) => {
-      props.files.forEach(file => {
-        file.converterType = val as ConverterType
-      })
+  get: () => {
+    if (
+      props.files.length > 0 &&
+      props.files.every(file => file.converterType === ConverterType.EN)
+    ) {
+      return ConverterType.EN
+    } else if (
+      props.files.length > 0 &&
+      props.files.every(file => file.converterType === ConverterType.CN)
+    ) {
+      return ConverterType.CN
+    } else {
+      return 'null'
     }
-  })
+  },
+  set: val => {
+    const updatedFiles = props.files.map(file => ({
+      ...file,
+      converterType: val as ConverterType
+    }))
+    emit('update:files', updatedFiles)
+  }
+})
 
 const handleFileLanguageChange = (index: number, value: any) => {
-  props.files[index].converterType = value as ConverterType
+  const updatedFiles = [...props.files]
+  updatedFiles[index] = { ...updatedFiles[index], converterType: value as ConverterType }
+  emit('update:files', updatedFiles)
 }
 </script>
 
@@ -697,36 +708,36 @@ const handleFileLanguageChange = (index: number, value: any) => {
     font-size: 0.75rem;
   }
 
-    .convert-options {
+  .convert-options {
     :deep(.el-radio) {
       font-size: 0.7rem;
       color: #606266;
 
       &.is-checked {
-        color: #0133A0;
-        
+        color: #0133a0;
+
         .el-radio__input {
           .el-radio__inner {
-            border-color: #0133A0;
-            background-color: #0133A0;
+            border-color: #0133a0;
+            background-color: #0133a0;
           }
         }
-        
+
         .el-radio__label {
-          color: #0133A0;
+          color: #0133a0;
         }
       }
 
       .el-radio__label {
         font-size: 0.65rem;
       }
-      
+
       .el-radio__input {
         .el-radio__inner {
           border-color: #dcdfe6;
-          
+
           &:hover {
-            border-color: #0133A0;
+            border-color: #0133a0;
           }
         }
       }
@@ -980,30 +991,30 @@ const handleFileLanguageChange = (index: number, value: any) => {
     color: #606266;
 
     &.is-checked {
-      color: #0133A0;
-      
+      color: #0133a0;
+
       .el-radio__input {
         .el-radio__inner {
-          border-color: #0133A0;
-          background-color: #0133A0;
+          border-color: #0133a0;
+          background-color: #0133a0;
         }
       }
-      
+
       .el-radio__label {
-        color: #0133A0;
+        color: #0133a0;
       }
     }
 
     .el-radio__label {
       font-size: 0.8rem;
     }
-    
+
     .el-radio__input {
       .el-radio__inner {
         border-color: #dcdfe6;
-        
+
         &:hover {
-          border-color: #0133A0;
+          border-color: #0133a0;
         }
       }
     }
@@ -1017,5 +1028,4 @@ const handleFileLanguageChange = (index: number, value: any) => {
 .convert-002 {
   padding-right: 10px;
 }
-
 </style>
