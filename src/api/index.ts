@@ -97,12 +97,13 @@ export const fileApi = {
     return Request.download(`/file/files/downloads`, { fileNameList }, fileNameList.length === 1)
   },
 
-  converter(fileUrl: String): Promise<ApiResponse<any>> {
+  converter(fileUrl: String, targetLanguage: String): Promise<ApiResponse<any>> {
     return Request.post(
       '/resume/generate',
       {
         fileName: fileUrl,
-        responseMode: 'blocking'
+        responseMode: 'blocking',
+        targetLanguage: targetLanguage
       },
       {
         timeout: 3 * 60 * 1000

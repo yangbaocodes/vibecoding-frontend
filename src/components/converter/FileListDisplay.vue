@@ -33,6 +33,15 @@
           />
         </div>
         <div class="table-header__file">File</div>
+        <div class="table-header__convert">
+          <div class="convert-to-label">Convert to</div>
+          <div class="convert-options">
+            <ElRadioGroup v-model="languageStatus">
+              <ElRadio :value="ConverterType.EN">English</ElRadio>
+              <ElRadio :value="ConverterType.CN">Chinese</ElRadio>
+            </ElRadioGroup>
+          </div>
+        </div>
         <div class="table-header__status">Status</div>
         <div class="table-header__action">Action</div>
       </div>
@@ -52,6 +61,17 @@
           </div>
           <div class="table-cell table-cell__file">
             <span class="file-name">{{ file.name }}</span>
+          </div>
+          <div class="table-cell table-cell__convert" @click.stop>
+            <div class="convert-options convert-001 convert-002">
+              <ElRadioGroup
+                v-model="file.converterType"
+                @change="value => handleFileLanguageChange(index, value)"
+              >
+                <ElRadio :value="ConverterType.EN">English</ElRadio>
+                <ElRadio :value="ConverterType.CN">Chinese</ElRadio>
+              </ElRadioGroup>
+            </div>
           </div>
           <div class="table-cell table-cell__status">
             <div class="status-container" :class="getStatusClass(file)">
@@ -153,7 +173,7 @@ import { ref, computed, watchEffect, type PropType } from 'vue'
 import { ElButton, ElCheckbox, ElMessage, ElPopover, ElDialog } from 'element-plus'
 import { Refresh, CircleCheck, CircleClose } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
-import { FileItem, FileStatus, OperationType } from '@/utils/converterUtils'
+import { FileItem, FileStatus, OperationType, ConverterType } from '@/utils/converterUtils'
 
 const emit = defineEmits<{
   'selected-multiple': [indices: number[], files: FileItem[], operation: OperationType]
@@ -342,6 +362,29 @@ const getDownloadButtonClass = (file: FileItem): string => {
 const handleDownloadFile = (index: number) => {
   emit('selected-single', index, props.files[index], OperationType.DOWNLOAD)
 }
+
+// 下面的代码都是和语言选择相关的方法和计算属性
+// 语言选择相关计算属性
+const languageStatus = computed({
+    get: () => {
+      if (props.files.length > 0 && props.files.every(file => file.converterType === ConverterType.EN)) {
+        return ConverterType.EN
+      } else if (props.files.length > 0 && props.files.every(file => file.converterType === ConverterType.CN)) {
+        return ConverterType.CN
+      } else {
+        return 'null'
+      }
+    },
+    set: (val) => {
+      props.files.forEach(file => {
+        file.converterType = val as ConverterType
+      })
+    }
+  })
+
+const handleFileLanguageChange = (index: number, value: any) => {
+  props.files[index].converterType = value as ConverterType
+}
 </script>
 
 <style lang="scss" scoped>
@@ -369,8 +412,38 @@ const handleDownloadFile = (index: number) => {
 
 .file-list-actions {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
+}
+
+.convert-to-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .convert-to-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+  }
+
+  .convert-to-options {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    :deep(.el-checkbox) {
+      .el-checkbox__label {
+        font-size: 0.8rem;
+        color: #606266;
+      }
+
+      &.is-checked .el-checkbox__label {
+        color: #0133a0;
+      }
+    }
+  }
 }
 
 .file-table {
@@ -379,7 +452,7 @@ const handleDownloadFile = (index: number) => {
 
 .table-header {
   display: grid;
-  grid-template-columns: 40px 1fr 160px 140px;
+  grid-template-columns: 40px 1fr 260px 120px 140px;
   padding: 0.4rem 1.5rem;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
@@ -406,12 +479,20 @@ const handleDownloadFile = (index: number) => {
   &__action {
     justify-content: center;
   }
+
+  &__convert {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
 }
 
 .table-body {
   .table-row {
     display: grid;
-    grid-template-columns: 40px 1fr 160px 140px;
+    grid-template-columns: 40px 1fr 260px 120px 140px;
     padding: 0.1rem 1.5rem;
     border-bottom: 1px solid #f3f4f6;
     transition: background-color 0.15s ease;
@@ -574,7 +655,7 @@ const handleDownloadFile = (index: number) => {
 
   .table-header,
   .table-row {
-    grid-template-columns: 30px 1fr 100px 120px;
+    grid-template-columns: 30px 1fr 120px 80px 100px;
     padding: 0.5rem 1rem;
   }
 
@@ -608,12 +689,48 @@ const handleDownloadFile = (index: number) => {
 @media (max-width: 480px) {
   .table-header,
   .table-row {
-    grid-template-columns: 30px 1fr 80px 100px;
+    grid-template-columns: 30px 1fr 100px 60px 80px;
   }
 
   .table-header__status,
   .table-header__action {
     font-size: 0.75rem;
+  }
+
+    .convert-options {
+    :deep(.el-radio) {
+      font-size: 0.7rem;
+      color: #606266;
+
+      &.is-checked {
+        color: #0133A0;
+        
+        .el-radio__input {
+          .el-radio__inner {
+            border-color: #0133A0;
+            background-color: #0133A0;
+          }
+        }
+        
+        .el-radio__label {
+          color: #0133A0;
+        }
+      }
+
+      .el-radio__label {
+        font-size: 0.65rem;
+      }
+      
+      .el-radio__input {
+        .el-radio__inner {
+          border-color: #dcdfe6;
+          
+          &:hover {
+            border-color: #0133A0;
+          }
+        }
+      }
+    }
   }
 
   .action-buttons {
@@ -838,4 +955,67 @@ const handleDownloadFile = (index: number) => {
     }
   }
 }
+
+.convert-to-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.convert-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  :deep(.el-radio-group) {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  :deep(.el-radio) {
+    margin-right: 0;
+    font-size: 0.8rem;
+    color: #606266;
+
+    &.is-checked {
+      color: #0133A0;
+      
+      .el-radio__input {
+        .el-radio__inner {
+          border-color: #0133A0;
+          background-color: #0133A0;
+        }
+      }
+      
+      .el-radio__label {
+        color: #0133A0;
+      }
+    }
+
+    .el-radio__label {
+      font-size: 0.8rem;
+    }
+    
+    .el-radio__input {
+      .el-radio__inner {
+        border-color: #dcdfe6;
+        
+        &:hover {
+          border-color: #0133A0;
+        }
+      }
+    }
+  }
+}
+
+.convert-001 {
+  padding-left: 78px;
+}
+
+.convert-002 {
+  padding-right: 10px;
+}
+
 </style>

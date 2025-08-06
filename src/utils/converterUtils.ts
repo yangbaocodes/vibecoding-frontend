@@ -13,6 +13,11 @@ export enum OperationType {
   NONE = 'none'
 }
 
+export enum ConverterType {
+  EN = 'en',
+  CN = 'zh'
+}
+
 export interface FileItem {
   name: string
   size: number
@@ -22,4 +27,5 @@ export interface FileItem {
   httpId?: String
   fileUrl?: string
   converterUrl?: string
+  converterType: ConverterType
 }

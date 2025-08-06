@@ -41,11 +41,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { ElMessage, ElButton } from 'element-plus'
-// import { useI18n } from 'vue-i18n'
 import ConverterUploadZone from '@/components/converter/ConverterUploadZone.vue'
 import FileListDisplay from '@/components/converter/FileListDisplay.vue'
 import type { FileItem } from '@/utils/converterUtils'
-import { FileStatus, OperationType } from '@/utils/converterUtils'
+import { FileStatus, OperationType, ConverterType } from '@/utils/converterUtils'
 import { fileApi } from '@/api'
 
 // const { t } = useI18n()
@@ -90,7 +89,8 @@ const handleFilesSelected = (files: File[]) => {
       name: file.name,
       size: file.size,
       file: file,
-      status: FileStatus.PENDING
+      status: FileStatus.PENDING,
+      converterType: ConverterType.EN
     })
   )
 
@@ -180,7 +180,7 @@ const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
           file.fileUrl = res.data[0].fileUrl
 
           fileApi
-            .converter(file.httpId ?? '')
+            .converter(file.httpId ?? '', file.converterType.toString())
             .then(res => {
               console.log('Converter file:', res)
               if (res.code === 200) {
