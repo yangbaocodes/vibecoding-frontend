@@ -1,7 +1,9 @@
 <template>
   <div class="converter-page">
     <div>
-      <p class="page-header__description">Upload your resume, and we will convert it to match the Cognizant resume template.</p>
+      <p class="page-header__description">
+        Upload your resume, and we will convert it to match the Cognizant resume template.
+      </p>
     </div>
 
     <div class="converter-content">
