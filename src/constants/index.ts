@@ -13,6 +13,8 @@ export const API_CONSTANTS = {
 export const STORAGE_KEYS = {
   TOKEN: 'auth_token',
   USER_INFO: 'user_info',
+  LANGUAGE_PREFERENCES: 'app_language_preferences',
+  TEMPLATE_PREFERENCES: 'app_template_preferences',
   LANGUAGE: 'app_language',
   THEME: 'app_theme'
 } as const
@@ -58,3 +60,6 @@ export const COMMON_CONSTANTS = {
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
   SUPPORTED_IMAGE_TYPES: ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 } as const
+
+// 用户偏好设置
+export { LanguagePreference, TemplatePreference, DEFAULT_PREFERENCES } from './preferences'

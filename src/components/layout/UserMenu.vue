@@ -17,9 +17,9 @@
           <ElIcon><Document /></ElIcon>
           <span>Reports</span>
         </ElDropdownItem>
-        <ElDropdownItem command="settings">
+        <ElDropdownItem command="preferences">
           <ElIcon><Setting /></ElIcon>
-          <span>{{ $t('user.settings') }}</span>
+          <span>Preferences</span>
         </ElDropdownItem>
         <ElDropdownItem divided command="logout">
           <ElIcon><SwitchButton /></ElIcon>
@@ -28,16 +28,21 @@
       </ElDropdownMenu>
     </template>
   </ElDropdown>
+
+  <!-- 偏好设置弹框 -->
+  <PreferencesDialog v-model="showPreferencesDialog" />
 </template>
 
 <script setup lang="ts">
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { User, Setting, SwitchButton, ArrowDown, Document } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store/modules/user'
 import { useAppStore } from '@/store/modules/app'
 import { ROUTE_NAMES } from '@/constants'
+import PreferencesDialog from './PreferencesDialog.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -46,6 +51,9 @@ const appStore = useAppStore()
 
 const { currentUser, logout } = userStore
 const { isMobile } = appStore
+
+// 偏好设置弹框
+const showPreferencesDialog = ref(false)
 
 // 处理下拉菜单命令
 const handleCommand = async (command: string) => {
@@ -61,10 +69,9 @@ const handleCommand = async (command: string) => {
       router.push('/reports')
       break
 
-    case 'settings':
-      // 跳转到设置页面
-      // router.push('/settings')
-      ElMessage.info('Settings page is coming soon!')
+    case 'preferences':
+      // 打开偏好设置对话框
+      showPreferencesDialog.value = true
       break
 
     case 'logout':
