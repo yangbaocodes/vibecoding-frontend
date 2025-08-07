@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       AutoImport({
-        imports: ['vue', 'vue-router', 'pinia', 'vue-i18n'],
+        imports: ['vue', 'vue-router', 'pinia'],
         resolvers: [ElementPlusResolver()],
         dts: true,
         eslintrc: {
@@ -73,7 +73,7 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia'],
             element: ['element-plus'],
-            utils: ['axios', 'vue-i18n']
+            utils: ['axios']
           }
         }
       },

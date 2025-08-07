@@ -2,15 +2,15 @@
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useSafeI18n } from '@/utils/i18n'
 import type { FormInstance, FormRules } from 'element-plus'
 import { userApi } from '@/api'
 import { useUserStore } from '@/store/modules/user'
 
 // 导出组合函数
 export function useAuthLogic() {
-  // 国际化
-  const { t } = useI18n()
+  // 安全的国际化 - 确保在 setup 函数中调用
+  const { t } = useSafeI18n()
 
   // 路由实例
   const router = useRouter()

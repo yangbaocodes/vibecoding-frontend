@@ -11,8 +11,62 @@
 - **网络请求**: Axios（封装请求拦截器、响应拦截器，统一错误处理）
 - **UI 库**: Element Plus（桌面端）
 - **代码规范**: ESLint + Prettier + Stylelint
-- **国际化**: Vue I18n（支持多语言，默认英文）
+- **国际化**: Vue I18n（支持多语言，默认英文，生产环境兼容）
 - **样式处理**: SCSS + 响应式设计
+
+## 🔧 最近修复
+
+### 国际化生产环境白屏问题修复
+
+**问题描述**: 在生产环境中，使用 `const { t } = useI18n()` 会导致应用白屏，而开发环境正常。
+
+**根本原因**: 
+1. Vue I18n 配置中的 `legacy: false` 在生产环境中存在兼容性问题
+2. AutoImport 配置中包含了 `vue-i18n`，可能导致时序问题
+3. 国际化实例在生产环境中初始化失败
+
+**解决方案**:
+1. **优化 Vue I18n 配置**: 添加生产环境兼容性配置
+   ```typescript
+   const i18n = createI18n({
+     legacy: false,
+     locale: DEFAULT_CONFIG.LANGUAGE,
+     fallbackLocale: 'en',
+     messages,
+     globalInjection: true,
+     allowComposition: true,
+     useScope: 'global',
+     missingWarn: false,
+     fallbackWarn: false
+   })
+   ```
+
+2. **移除 AutoImport 中的 vue-i18n**: 避免自动导入导致的时序问题
+   ```typescript
+   AutoImport({
+     imports: ['vue', 'vue-router', 'pinia'], // 移除 vue-i18n
+     // ...
+   })
+   ```
+
+3. **创建安全的国际化工具函数**: 提供错误处理和回退机制
+   ```typescript
+   export function useSafeI18n() {
+     try {
+       const i18n = useI18n()
+       return { t: i18n.t, locale: i18n.locale, availableLocales: i18n.availableLocales }
+     } catch (error) {
+       console.warn('I18n not available, using fallback:', error)
+       return { t: (key: string) => key, locale: { value: 'en' }, availableLocales: ['en'] }
+     }
+   }
+   ```
+
+**使用方式**: 在组件中使用 `useSafeI18n()` 替代 `useI18n()`
+```typescript
+import { useSafeI18n } from '@/utils/i18n'
+const { t } = useSafeI18n()
+```
 
 ## 📁 项目结构
 
@@ -65,7 +119,8 @@ frontend/
 │   ├── utils/               # 工具函数
 │   │   ├── index.ts         # 通用工具函数
 │   │   ├── storage.ts       # 存储工具
-│   │   └── request.ts       # HTTP 请求工具
+│   │   ├── request.ts       # HTTP 请求工具
+│   │   └── i18n.ts         # 国际化工具函数
 │   ├── views/               # 页面组件
 │   │   ├── auth/            # 认证相关页面
 │   │   │   └── Login.vue    # 登录页面
@@ -98,6 +153,7 @@ frontend/
 - **热重载**: Vite 提供极速的开发体验
 - **代码规范**: ESLint + Prettier + Stylelint 统一代码风格
 - **自动导入**: 组件和 API 自动导入
+- **国际化安全**: 生产环境兼容的国际化配置
 - **路径别名**: 简化模块导入路径
 
 ### 🎨 UI/UX
