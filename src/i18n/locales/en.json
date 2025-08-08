@@ -73,7 +73,7 @@
     "loggingIn": "Logging in...",
     "emailPlaceholder": "Enter your email",
     "verificationCodePlaceholder": "Enter verification code",
-    "invalidEmailDomain": "Please use @cognizant.com email"
+    "invalidEmailDomain": "Please use {'@'}cognizant.com email"
   },
   "dashboard": {
     "title": "Dashboard",

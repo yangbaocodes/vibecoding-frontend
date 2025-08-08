@@ -17,10 +17,11 @@
           <ElIcon><Document /></ElIcon>
           <span>Reports</span>
         </ElDropdownItem>
-        <ElDropdownItem command="preferences">
+        <!-- 隐藏偏好设置入口 -->
+        <!-- <ElDropdownItem command="preferences">
           <ElIcon><Setting /></ElIcon>
           <span>Preferences</span>
-        </ElDropdownItem>
+        </ElDropdownItem> -->
         <ElDropdownItem divided command="logout">
           <ElIcon><SwitchButton /></ElIcon>
           <span>{{ $t('auth.logout') }}</span>
@@ -36,7 +37,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { User, Setting, SwitchButton, ArrowDown, Document } from '@element-plus/icons-vue'
+// import { User, Setting, SwitchButton, ArrowDown, Document } from '@element-plus/icons-vue'
+import { User, SwitchButton, ArrowDown, Document } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store/modules/user'

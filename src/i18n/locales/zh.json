@@ -73,7 +73,7 @@
     "loggingIn": "登录中...",
     "emailPlaceholder": "请输入邮箱",
     "verificationCodePlaceholder": "请输入验证码",
-    "invalidEmailDomain": "请使用 @cognizant.com 邮箱"
+    "invalidEmailDomain": "请使用 {'@'}cognizant.com 邮箱"
   },
   "dashboard": {
     "title": "仪表盘",

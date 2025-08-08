@@ -206,7 +206,11 @@ class Request {
   /**
    * 文件下载
    */
-  static download(url: string, params?: Record<string, any>, isSingle: boolean = false): Promise<void> {
+  static download(
+    url: string,
+    params?: Record<string, any>,
+    isSingle: boolean = false
+  ): Promise<void> {
     return service
       .post(
         url,
@@ -224,11 +228,11 @@ class Request {
         // 添加日期后缀
         const now = new Date()
         const dateStr =
-            now.getFullYear() +
-            '-' +
-            String(now.getMonth() + 1).padStart(2, '0') +
-            '-' +
-            String(now.getDate()).padStart(2, '0')
+          now.getFullYear() +
+          '-' +
+          String(now.getMonth() + 1).padStart(2, '0') +
+          '-' +
+          String(now.getDate()).padStart(2, '0')
 
         let filename = `new_resume_${dateStr}.zip`
 
