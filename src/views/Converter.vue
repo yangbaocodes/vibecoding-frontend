@@ -70,7 +70,6 @@ const isConvertButtonEnabled = computed(() => {
     file =>
       file &&
       file.status !== FileStatus.CONVERTING &&
-      file.status !== FileStatus.CONVERTED &&
       file.status !== FileStatus.SIZE_LIMIT_EXCEEDED
   )
 
@@ -164,11 +163,7 @@ const handleSelectedSingle = (index: number, file: FileItem, operation: Operatio
 const handleConvertSelectedFiles = (_indices: number[], files: FileItem[]) => {
   // 调用api
   files.forEach(file => {
-    if (
-      file.status === FileStatus.CONVERTING ||
-      file.status === FileStatus.CONVERTED ||
-      file.status === FileStatus.SIZE_LIMIT_EXCEEDED
-    ) {
+    if (file.status === FileStatus.CONVERTING || file.status === FileStatus.SIZE_LIMIT_EXCEEDED) {
       return
     }
 
